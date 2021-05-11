@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:solidarieta/src/core/screens/fixed/splash_screen.dart';
+
+import 'src/core/screens/fixed/splash_screen.dart';
 
 void main() {
   runApp(MyApp());
