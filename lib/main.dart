@@ -1,10 +1,18 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
+import 'package:solidarieta/src/core/providers/times_provider.dart';
 
 import 'src/core/screens/fixed/splash_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(
+      MultiProvider(providers: [
+        ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
+        ChangeNotifierProvider(create: (context) => Times()),
+      ], child: MyApp()),
+    );
 
 class MyApp extends StatelessWidget {
   @override
@@ -12,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title:
           "Applicazione dell'Associazione di solidarietà - Milano, Quarto Oggiaro",
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color.fromRGBO(0, 133, 119, 1),
         accentColor: Color.fromRGBO(122, 88, 49, 1),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:solidarieta/src/core/screens/fixed/onboarding_screens.dart';
+import 'package:solidarieta/home.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Duration(seconds: 4),
         () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => OnBoardingScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             ));
   }
 
