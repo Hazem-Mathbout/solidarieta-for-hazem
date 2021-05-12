@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:solidarieta/src/core/components/widgets/bottom_navigation_bar.dart';
-import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
-import 'package:solidarieta/src/core/screens/blogs_screen.dart';
-import 'package:solidarieta/src/core/screens/calendar_screen.dart';
-import 'package:solidarieta/src/core/screens/map_screen.dart';
-import 'package:solidarieta/src/core/screens/prayers_screen.dart';
-import 'package:solidarieta/src/core/screens/qibla_screen.dart';
+import 'package:solidarieta/versionOne/src/core/components/widgets/bottom_navigation_bar.dart';
+import 'package:solidarieta/versionOne/src/core/providers/bottom_navbar_index.dart';
+import 'package:solidarieta/versionOne/src/core/screens/blogs_screen.dart';
+import 'package:solidarieta/versionOne/src/core/screens/calendar_screen.dart';
+import 'package:solidarieta/versionOne/src/core/screens/map_screen.dart';
+import 'package:solidarieta/versionOne/src/core/screens/prayers_screen.dart';
+import 'package:solidarieta/versionOne/src/core/screens/qibla_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   @override
   Widget build(BuildContext context) {
-    var _currentPage = Provider.of<BottomNavbarIndex>(context, listen: true);
+    var _currentPage = Provider.of<BottomNavbarIndex>(context, listen: false);
     int ind = _currentPage.getCurrentIndex();
     Color color = Theme.of(context).primaryColor;
 

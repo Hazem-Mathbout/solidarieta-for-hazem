@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 
 class Times extends ChangeNotifier {
-  // String _currentDay = DateFormat('jms').format(DateTime.now());
+  var _currentDateTime = DateTime.now();
   int _currentDay = DateTime.now().day;
   int _currentMonth = DateTime.now().month;
   int _currentYear = DateTime.now().year;
@@ -13,6 +13,8 @@ class Times extends ChangeNotifier {
   int _currentDayHijri = HijriCalendar.now().hDay;
   int _currentMonthHijri = HijriCalendar.now().hMonth;
   int _currentYearHijri = HijriCalendar.now().hYear;
+
+  getCurrentDateTime() => _currentDateTime;
 
   String _currentMonthHijriName = HijriCalendar.now().longMonthName;
   getCurrentMonthHijriName() => _currentMonthHijriName;
@@ -28,6 +30,7 @@ class Times extends ChangeNotifier {
   getCurrentYearHijri() => _currentYearHijri;
 
   updateTimes() {
+    _currentDateTime = DateTime.now();
     _currentDay = DateTime.now().day;
     _currentMonth = DateTime.now().month;
     _currentYear = DateTime.now().year;

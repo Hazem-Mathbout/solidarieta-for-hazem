@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:solidarieta/src/core/providers/times_provider.dart';
+import 'package:solidarieta/versionOne/src/core/components/widgets/date_in_italiano.dart';
+import 'package:solidarieta/versionOne/src/core/components/widgets/home_prayers_table.dart';
+import 'package:solidarieta/versionOne/src/core/providers/times_provider.dart';
 
 class PrayerTimings extends StatelessWidget {
   @override
@@ -27,17 +29,7 @@ class PrayerTimings extends StatelessWidget {
                     child: Image.asset('assets/images/logo.png'),
                   ),
                   SizedBox(height: 10.0),
-                  Text(
-                    "Lunedì, " +
-                        formatChecker(data.getCurrentDay()) +
-                        " Marzo " +
-                        data.getCurrentYear().toString(),
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  CompleteDayName(),
                   SizedBox(height: 3.0),
                   Text(
                     formatChecker(data.getCurrentDayHijri()) +
@@ -62,6 +54,8 @@ class PrayerTimings extends StatelessWidget {
                   ),
                 ],
               ),
+              SizedBox(height: 30),
+              Prayers(),
             ],
           ),
         );

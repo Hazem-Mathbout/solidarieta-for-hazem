@@ -33,6 +33,8 @@ dependencies:
   provider: ^5.0.0
   intl:
   hijri: ^2.0.3
+  adhan: ^1.1.16
+  fluttericon: ^2.0.0
   
   
 
