@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/meteocons_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:solidarieta/versionOne/src/core/providers/times_provider.dart';
+import 'package:solidarieta/src/core/providers/times_provider.dart';
 
 class Prayers extends StatelessWidget {
   @override
@@ -26,7 +26,7 @@ class Prayers extends StatelessWidget {
                   topLeft: Radius.circular(40), topRight: Radius.circular(40)),
             ),
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 5),
+              padding: EdgeInsets.symmetric(horizontal: 50.0, vertical: 5),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -89,7 +89,6 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
       height: 35,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
-        // color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(40),
         ),
@@ -99,22 +98,25 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 18,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  preghiera,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
+            Container(
+              width: 90.0,
+              child: Row(
+                children: [
+                  Icon(
+                    icon,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    preghiera,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
             ),
             Row(
               children: [
@@ -125,15 +127,15 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
                       fontSize: 15,
                       fontWeight: FontWeight.w600),
                 ),
-                SizedBox(width: 55),
-                Text(
-                  adhan,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600),
-                ),
+                SizedBox(width: 30)
               ],
+            ),
+            Text(
+              adhan,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600),
             ),
           ],
         ),

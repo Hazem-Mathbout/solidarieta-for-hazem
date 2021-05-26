@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
-import 'package:solidarieta/versionOne/src/core/components/widgets/date_in_italiano.dart';
-import 'package:solidarieta/versionOne/src/core/components/widgets/home_prayers_table.dart';
-import 'package:solidarieta/versionOne/src/core/providers/times_provider.dart';
+import 'package:solidarieta/src/core/components/widgets/date_in_italiano.dart';
+import 'package:solidarieta/src/core/components/widgets/home_prayers_table.dart';
+import 'package:solidarieta/src/core/providers/times_provider.dart';
 
 class PrayerTimings extends StatelessWidget {
   @override

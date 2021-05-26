@@ -2,7 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:solidarieta/versionOne/src/core/providers/bottom_navbar_index.dart';
+import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
@@ -24,7 +24,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             setState(() => _currentIndex.updateCurrentIndex(index)),
         items: <BottomNavyBarItem>[
           navItem(LineAwesomeIcons.calendar, 'Calendario'),
-          navItem(LineAwesomeIcons.newspaper, 'Notizia'),
+          // navItem(LineAwesomeIcons.newspaper, 'Notizia'),
           navItem(Icons.access_time, 'Preghiere'),
           navItem(LineAwesomeIcons.alternate_map_marked, 'Indirizzo'),
           navItem(LineAwesomeIcons.compass, 'Qibla'),
