@@ -43,8 +43,11 @@ dependencies:
   vector_math:
   flutter_svg: ^0.22.0
   google_maps_flutter: ^2.0.5
-  # Font
+  
+  # quran
+  quran: ^1.0.3
   google_fonts_arabic: ^1.1.7
+  arabic_numbers: ^0.0.1
   
   
 
@@ -68,6 +71,7 @@ flutter:
     - assets/images/
     - assets/images/features/
     - assets/svg/
+    - assets/hisnulmuslimData.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -85,6 +89,9 @@ flutter:
     - family: Pattaya
       fonts:
         - asset: assets/fonts/Pattaya.ttf
+    - family: Fontee
+      fonts:
+        - asset: assets/fonts/fontee.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

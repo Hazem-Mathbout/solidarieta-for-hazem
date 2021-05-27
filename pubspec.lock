@@ -8,6 +8,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.16"
+  arabic_numbers:
+    dependency: "direct main"
+    description:
+      name: arabic_numbers
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.1"
   async:
     dependency: transitive
     description:
@@ -254,6 +261,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.0.0"
+  quran:
+    dependency: "direct main"
+    description:
+      name: quran
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.3"
   rxdart:
     dependency: transitive
     description:

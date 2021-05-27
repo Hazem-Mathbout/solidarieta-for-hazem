@@ -18,7 +18,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
   Feature hadith = Feature(
     imgUrl: "assets/images/features/hadith.jpeg",
     color: Colors.cyan,
-    title: "Hadith profetico\nالحديث النبوي",
+    title: "Hadith profetico\nالاربعين النووية",
     index: 1,
   );
 
@@ -46,7 +46,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
   Feature duaa = Feature(
     imgUrl: "assets/images/features/duaa.jpg",
     color: Colors.pink,
-    title: "La supplica\nالدعاء",
+    title: "La supplica\nحصن المسلم",
     index: 5,
   );
 
@@ -98,11 +98,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
                         parent: AlwaysScrollableScrollPhysics()),
                     children: [
                       quran,
-                      // hadith,
+                      hadith,
                       names,
                       // hajj,
                       // omra,
-                      // duaa,
+                      duaa,
                     ],
                   ),
                 ),
