@@ -60,7 +60,8 @@ class TheSuraScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "سورة " + quran.getSuraArabicName(suraNum),
+                              // "سورة " + quran.getSuraArabicName(suraNum),
+                              "سورة " + arabicNumber.convert(suraNum),
                               style: TextStyle(
                                 fontSize: 30,
                                 color: Colors.black,

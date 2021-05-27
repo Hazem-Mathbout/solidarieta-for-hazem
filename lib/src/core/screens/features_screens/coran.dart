@@ -1,3 +1,4 @@
+import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:quran/quran.dart' as quran;
@@ -50,6 +51,8 @@ class _CoranState extends State<Coran> {
   }
 
   mySura(int surahNumber) {
+    ArabicNumbers arabicNumber = ArabicNumbers();
+
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -104,7 +107,7 @@ class _CoranState extends State<Coran> {
                             ),
                           ),
                           Text(
-                            "سورة  " + quran.getSuraArabicName(surahNumber),
+                            "سورة  " + arabicNumber.convert(surahNumber),
                             style: TextStyle(
                               fontSize: 17.0,
                               color: Colors.black,
