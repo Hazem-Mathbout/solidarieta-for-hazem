@@ -48,6 +48,10 @@ dependencies:
   quran: ^1.0.3
   google_fonts_arabic: ^1.1.7
   arabic_numbers: ^0.0.1
+  # mapScreen
+  url_launcher: ^6.0.4
+  location: ^4.1.1
+  flutter_polyline_points: ^1.0.0
   
   
 

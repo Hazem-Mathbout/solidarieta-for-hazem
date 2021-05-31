@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
+import 'package:solidarieta/src/core/providers/mapProvider.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
 
 import 'src/core/screens/fixed_screens/splash_screen.dart';
@@ -9,6 +10,7 @@ void main() => runApp(
       MultiProvider(providers: [
         ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
         ChangeNotifierProvider(create: (context) => Times()),
+        ChangeNotifierProvider(create: (context) => MapProvider()),
       ], child: MyApp()),
     );
 
