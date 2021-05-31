@@ -107,7 +107,8 @@ class _CoranState extends State<Coran> {
                             ),
                           ),
                           Text(
-                            "سورة  " + arabicNumber.convert(surahNumber),
+                            "سورة " + quran.getSuraArabicName(surahNumber),
+                            // "سورة  " + arabicNumber.convert(surahNumber),
                             style: TextStyle(
                               fontSize: 17.0,
                               color: Colors.black,

@@ -72,7 +72,7 @@ class _CalendarState extends State<Calendar> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Text(
-                        "Hel",
+                        "Hel ",
                         style: TextStyle(color: Colors.white),
                       ),
                       Text("Fajr", style: styleOne()),
@@ -117,16 +117,18 @@ rowee(int day, DateTime fajr, DateTime shoruq, DateTime duhr, DateTime asr,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            theDay,
-            style: styleOne(),
+          Expanded(
+            child: Text(
+              theDay,
+              style: styleOne(),
+            ),
           ),
-          Text(time(fajr)),
-          Text(time(shoruq)),
-          Text(time(duhr)),
-          Text(time(asr)),
-          Text(time(maghrib)),
-          Text(time(isha)),
+          Expanded(child: Text(time(fajr))),
+          Expanded(child: Text(time(shoruq))),
+          Expanded(child: Text(time(duhr))),
+          Expanded(child: Text(time(asr))),
+          Expanded(child: Text(time(maghrib))),
+          Expanded(child: Text(time(isha))),
         ],
       ),
     ),
