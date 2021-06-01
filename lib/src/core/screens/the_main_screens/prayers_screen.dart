@@ -20,12 +20,13 @@ class PrayerTimings extends StatelessWidget {
       body: Consumer<Times>(builder: (context, data, child) {
         return Container(
           child: ListView(
+            physics: AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
             children: [
               Column(
                 children: [
                   Container(
-                    height: 150.0,
+                    height: 130.0,
                     child: Image.asset('assets/images/logo.png'),
                   ),
                   SizedBox(height: 10.0),
@@ -38,7 +39,7 @@ class PrayerTimings extends StatelessWidget {
                         "  " +
                         data.getCurrentYearHijri().toString(),
                     style: TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 18.0,
                       color: Colors.black,
                       fontWeight: FontWeight.w400,
                     ),
@@ -47,7 +48,7 @@ class PrayerTimings extends StatelessWidget {
                   Text(
                     "${formatChecker(data.getCurrentHour())} : ${formatChecker(data.getCurrentMinute())} : ${formatChecker(data.getCurrentSeconde())}",
                     style: TextStyle(
-                      fontSize: 30.0,
+                      fontSize: 25.0,
                       color: Theme.of(context).primaryColor,
                       fontWeight: FontWeight.bold,
                     ),

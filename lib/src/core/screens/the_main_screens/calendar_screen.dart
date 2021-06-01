@@ -26,7 +26,7 @@ class _CalendarState extends State<Calendar> {
                   .day;
 
           return Padding(
-            padding: EdgeInsets.symmetric(vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 5),
             child: Column(
               children: [
                 CompleteDayName(),
@@ -43,7 +43,7 @@ class _CalendarState extends State<Calendar> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 20.0),
+                // SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -65,7 +65,7 @@ class _CalendarState extends State<Calendar> {
                     ),
                   ],
                 ),
-                SizedBox(height: 20.0),
+                // SizedBox(height: 20.0),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   child: Row(

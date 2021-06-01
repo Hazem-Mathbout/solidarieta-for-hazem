@@ -87,17 +87,17 @@ List<Moschea> moschee = [
       latLng: LatLng(45.434154836398825, 9.182435152220302)),
   Moschea(
       id: 16,
-      title: "DITIB Moschea",
+      title: "Moschea",
       direction: "Via Vincenzo Toffetti, 27, 20139 Milano MI",
       latLng: LatLng(45.43981069562602, 9.233596264615352)),
   Moschea(
       id: 17,
-      title: "دار الثقافة الإسلامية بـ روتسانو ميلانو ايطاليا",
+      title: "Moschea di Rozzano",
       direction: "Via Aspromonte, 60, 20089 Rozzano MI",
       latLng: LatLng(45.3958083939882, 9.156572098418415)),
   Moschea(
       id: 18,
-      title: "Moschea Assabil \"La Retta Via\"",
+      title: "Moschea di San Giuliano",
       direction: "Via Marzabotto, 8/10, 20098 San Giuliano Milanese MI",
       latLng: LatLng(45.3971359233225, 9.292163645473982)),
   Moschea(
@@ -111,8 +111,8 @@ List<Moschea> moschee = [
       direction: "Via Lodivecchio, 41, 26900 Lodi LO",
       latLng: LatLng(45.30964517093934, 9.484845093702772)),
   Moschea(
+      id: 21,
       title: "Moschea di Quarto Oggiaro",
       direction: "Via Sabatino Lopez, 3, 20157 Quarto Oggiaro",
       latLng: LatLng(45.515439986189016, 9.145578169004908)),
-  // Moschea(title: "", direction: "", latLng: LatLng()),
 ];

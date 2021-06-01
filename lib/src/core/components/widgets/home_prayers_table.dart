@@ -9,7 +9,7 @@ class Prayers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 305,
+      // height: 305,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
         borderRadius: BorderRadius.all(
@@ -19,7 +19,7 @@ class Prayers extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 50,
+            height: 40,
             decoration: BoxDecoration(
               color: Color.fromRGBO(0, 133, 119, 1),
               borderRadius: BorderRadius.only(
@@ -61,7 +61,7 @@ class Prayers extends StatelessWidget {
           Consumer<Times>(
             builder: (context, data, child) {
               return Container(
-                height: 250,
+                // height: 250,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 0.8),
                   borderRadius: BorderRadius.all(
@@ -84,9 +84,9 @@ class Prayers extends StatelessWidget {
 
 aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
   return Padding(
-    padding: EdgeInsets.symmetric(vertical: 1.0, horizontal: 10),
+    padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10),
     child: Container(
-      height: 35,
+      // height: 35,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
         borderRadius: BorderRadius.all(
@@ -94,7 +94,7 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 1),
+        padding: EdgeInsets.symmetric(horizontal: 25, vertical: 3),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -13,6 +13,7 @@ import 'dart:math' show cos, sqrt, asin;
 
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/providers/mapProvider.dart';
+import 'package:solidarieta/src/helpers/constants/moschee.dart';
 
 class MapDirection extends StatefulWidget {
   @override
@@ -28,19 +29,9 @@ class _MapDirectionState extends State<MapDirection> {
 
   LocationData _location;
   String _error;
-  LatLng _originLoc = LatLng(45.51753516855842, 9.141933444258534);
-  LatLng _destinationLoc = LatLng(45.51552497197385, 9.145576611414313);
-
-  List<LatLng> mosques = [
-    LatLng(45.51834596443348, 9.137984743075357),
-    LatLng(45.515601167461064, 9.142255347129971),
-    LatLng(45.514387846332916, 9.136622664316935),
-    LatLng(45.51804234877466, 9.152894859110155),
-    LatLng(45.50714756200216, 9.138340312993927),
-    LatLng(45.60899131401847, 8.71492535805779),
-    LatLng(45.513323466846906, 9.16180502644359),
-    LatLng(45.47157084250285, 9.197550650103862),
-  ];
+  LatLng _originLoc = LatLng(0, 0);
+  LatLng _destinationLoc =
+      LatLng(45.515439986189016, 9.145578169004908); // Of Quarto Oggiaro
 
   Future<void> animateTo(double lat, double lng, double zoom) async {
     final c = await _controller.future;
@@ -61,7 +52,8 @@ class _MapDirectionState extends State<MapDirection> {
         _location = _locationResult;
 
         _originLoc = LatLng(_location.latitude, _location.longitude);
-        _destinationLoc = nearestMosque(mosques, _originLoc);
+        Moschea _nearestMosque = nearestMosque(moschee, _originLoc);
+        _destinationLoc = _nearestMosque.latLng;
 
         double distance = _coordinateDistance(_destinationLoc, _originLoc);
 
@@ -81,7 +73,7 @@ class _MapDirectionState extends State<MapDirection> {
         // Add destination marker
 
         _addMarker(
-          nearestMosque(mosques, _originLoc),
+          _nearestMosque.latLng,
           "destination",
           BitmapDescriptor.defaultMarkerWithHue(90),
           // BitmapDescriptor.fromAssetImage(),
@@ -107,14 +99,14 @@ class _MapDirectionState extends State<MapDirection> {
     super.initState();
   }
 
-  IconData _chosenValue = Icons.directions_car; // added line
-  IconData _chosenValueTwo =
-      LineAwesomeIcons.alternate_map_marked; // added line
+  IconData _chosenValue = Icons.directions_car;
+  IconData _chosenValueTwo = LineAwesomeIcons.alternate_map_marked;
 
   @override
   Widget build(BuildContext context) {
     var mapType = Provider.of<MapProvider>(context, listen: false);
-
+    Moschea currentMosque =
+        Provider.of<MapProvider>(context, listen: false).getCurrentMosque();
     return Scaffold(
       body: Stack(
         children: [
@@ -133,70 +125,161 @@ class _MapDirectionState extends State<MapDirection> {
             },
           ),
           Positioned(
-            right: 30, // 18
+            left: 30, // 18
             top: 40,
-            child: InkWell(
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: Offset(0, 0),
+            child: Column(
+              children: [
+                InkWell(
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                child: Center(
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<IconData>(
-                      autofocus: true,
-                      value: _chosenValue,
-                      iconSize: 0.0,
-                      style: TextStyle(color: Colors.black),
-                      items: <IconData>[
-                        Icons.directions_car,
-                        Icons.directions_walk_outlined,
-                      ].map<DropdownMenuItem<IconData>>((IconData value) {
-                        return DropdownMenuItem<IconData>(
-                          value: value,
-                          child: Icon(
-                            value,
-                            color: Colors.grey[700],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (IconData value) {
-                        var travel =
-                            Provider.of<MapProvider>(context, listen: false);
-                        setState(() {
-                          if (value == Icons.directions_car) {
-                            travel.updateTravelMode(TravelMode.driving);
-                          } else if (value == Icons.directions_walk_outlined) {
-                            travel.updateTravelMode(TravelMode.walking);
-                          }
+                    child: Center(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<IconData>(
+                          autofocus: true,
+                          value: _chosenValue,
+                          iconSize: 0.0,
+                          style: TextStyle(color: Colors.black),
+                          items: <IconData>[
+                            Icons.directions_car,
+                            Icons.directions_walk_outlined,
+                          ].map<DropdownMenuItem<IconData>>((IconData value) {
+                            return DropdownMenuItem<IconData>(
+                              value: value,
+                              child: Icon(
+                                value,
+                                color: Colors.grey[700],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (IconData value) {
+                            var travel = Provider.of<MapProvider>(context,
+                                listen: false);
+                            setState(() {
+                              if (value == Icons.directions_car) {
+                                travel.updateTravelMode(TravelMode.driving);
+                              } else if (value ==
+                                  Icons.directions_walk_outlined) {
+                                travel.updateTravelMode(TravelMode.walking);
+                              }
 
-                          _getLocation();
-                          _chosenValue = value;
-                        });
-                      },
+                              _getLocation();
+                              _chosenValue = value;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 10),
+                InkWell(
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<IconData>(
+                          autofocus: true,
+                          value: _chosenValueTwo,
+                          iconSize: 0.0,
+                          style: TextStyle(color: Colors.black),
+                          items: <IconData>[
+                            LineAwesomeIcons.alternate_map_marked,
+                            Icons.map,
+                          ].map<DropdownMenuItem<IconData>>((IconData value) {
+                            return DropdownMenuItem<IconData>(
+                              value: value,
+                              child: Icon(
+                                value,
+                                color: Colors.grey[700],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (IconData value) {
+                            var travel = Provider.of<MapProvider>(context,
+                                listen: false);
+                            setState(() {
+                              if (value ==
+                                  LineAwesomeIcons.alternate_map_marked) {
+                                travel.updateMapType(MapType.normal);
+                              } else if (value == Icons.map) {
+                                travel.updateMapType(MapType.satellite);
+                              }
+
+                              _getLocation();
+                              _chosenValueTwo = value;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      _getLocation();
+                    });
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Icon(
+                        Icons.autorenew,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           Positioned(
-            right: 30, // 18
-            top: 90,
+            bottom: 40,
+            left: 40,
             child: InkWell(
               child: Container(
-                height: 40,
-                width: 40,
+                width: 240,
+                margin: EdgeInsets.only(right: 60.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -209,74 +292,35 @@ class _MapDirectionState extends State<MapDirection> {
                     ),
                   ],
                 ),
-                child: Center(
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<IconData>(
-                      autofocus: true,
-                      value: _chosenValueTwo,
-                      iconSize: 0.0,
-                      style: TextStyle(color: Colors.black),
-                      items: <IconData>[
-                        LineAwesomeIcons.alternate_map_marked,
-                        Icons.map,
-                      ].map<DropdownMenuItem<IconData>>((IconData value) {
-                        return DropdownMenuItem<IconData>(
-                          value: value,
-                          child: Icon(
-                            value,
-                            color: Colors.grey[700],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (IconData value) {
-                        var travel =
-                            Provider.of<MapProvider>(context, listen: false);
-                        setState(() {
-                          if (value == LineAwesomeIcons.alternate_map_marked) {
-                            travel.updateMapType(MapType.normal);
-                          } else if (value == Icons.map) {
-                            travel.updateMapType(MapType.satellite);
-                          }
-
-                          _getLocation();
-                          _chosenValueTwo = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 30, // 18
-            top: 140,
-            child: InkWell(
-              onTap: () {
-                setState(() {
-                  _getLocation();
-                });
-              },
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: Offset(0, 0),
-                    ),
-                  ],
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.refresh,
-                    color: Colors.grey[700],
-                  ),
+                child: Padding(
+                  padding: EdgeInsets.all(10.0),
+                  child: Center(
+                      child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "La moschea più vicina :",
+                        style: TextStyle(
+                          color: Colors.black,
+                          // fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        currentMosque.title,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        currentMosque.direction,
+                        style: TextStyle(
+                          // color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  )),
                 ),
               ),
             ),
@@ -355,17 +399,19 @@ class _MapDirectionState extends State<MapDirection> {
   }
 
 // The nearest mosque to the current location
-  LatLng nearestMosque(List<LatLng> mosques, LatLng currentLocation) {
-    double distance = _coordinateDistance(mosques[0], currentLocation);
-    LatLng nearest = mosques[0];
+  Moschea nearestMosque(List<Moschea> mosques, LatLng currentLocation) {
+    var moschea = Provider.of<MapProvider>(context, listen: false);
+    double distance = _coordinateDistance(mosques[0].latLng, currentLocation);
+    Moschea nearest = mosques[0];
     for (var i = 0; i < mosques.length; i++) {
-      double theDis = _coordinateDistance(mosques[i], currentLocation);
+      double theDis = _coordinateDistance(mosques[i].latLng, currentLocation);
 
       if (theDis < distance) {
         distance = theDis;
         nearest = mosques[i];
       }
     }
+    moschea.updateCurrentMosque(nearest);
     return nearest;
   }
 }

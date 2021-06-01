@@ -31,7 +31,7 @@ class _CompleteDayNameState extends State<CompleteDayName> {
             " ${toUpperCase(monthFormat.format(data.getCurrentDateTime()))} " +
             data.getCurrentYear().toString(),
         style: TextStyle(
-          fontSize: 20.0,
+          fontSize: 18.0,
           color: Colors.black,
           fontWeight: FontWeight.w700,
         ),
