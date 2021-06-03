@@ -2,7 +2,7 @@
     package="com.example.solidarieta">
     <application
         android:label="solidarieta"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"	
                android:value="AIzaSyCSTlgS5zNyXm7NYe64j6lyif5Wmvq6acY"/>
         <uses-library android:name="org.apache.http.legacy" android:value="false"/>

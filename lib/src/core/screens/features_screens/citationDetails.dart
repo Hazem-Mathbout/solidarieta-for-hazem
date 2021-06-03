@@ -70,6 +70,8 @@ class _CitationDetailsState extends State<CitationDetails> {
                       SizedBox(height: 20),
                       Expanded(
                         child: ListView.builder(
+                          physics: BouncingScrollPhysics(
+                              parent: AlwaysScrollableScrollPhysics()),
                           itemCount: hadith.hadiths.length,
                           itemBuilder: (context, item) {
                             var citation = hadith.hadiths[item];

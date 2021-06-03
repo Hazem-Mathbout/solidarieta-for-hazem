@@ -38,6 +38,8 @@ class _HadithNawawiState extends State<HadithNawawi> {
       body: Padding(
         padding: EdgeInsets.all(20),
         child: ListView(
+          physics:
+              BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,

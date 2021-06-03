@@ -25,6 +25,8 @@ class Hadith extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.builder(
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   itemCount: nawawis.length,
                   itemBuilder: (context, index) {
                     return Padding(

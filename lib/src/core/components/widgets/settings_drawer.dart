@@ -21,26 +21,31 @@ SetLink shareIt = SetLink(
   text: "Condividi l'app con i tuoi amici",
   icon: LineAwesomeIcons.alternate_share_square,
   color: Colors.black26,
+  link: "share",
 );
 SetLink facebook = SetLink(
   text: "facebook.com/lasolidarieta-mialn",
   icon: LineAwesomeIcons.facebook_f,
   color: Colors.black26,
+  link: 'https://www.facebook.com/',
 );
 SetLink website = SetLink(
   text: "www.lasolidarieta-mialn.com",
   icon: LineAwesomeIcons.chrome,
   color: Colors.black26,
+  link: 'https://www.google.com/',
 );
 SetLink twitter = SetLink(
   text: "twitter.com/lasolidarieta-mialn",
   icon: LineAwesomeIcons.twitter,
   color: Colors.black54,
+  link: "https://twitter.com/",
 );
 SetLink feedback = SetLink(
   text: "Retroazione",
   icon: LineAwesomeIcons.star_1,
   color: Colors.black26,
+  link: "rating",
 );
 SetLink cookies = SetLink(
   text: "Cookie",

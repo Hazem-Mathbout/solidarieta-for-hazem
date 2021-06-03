@@ -26,6 +26,8 @@ class GodNames extends StatelessWidget {
             // padding: EdgeInsets.fromLTRB(24.0, 10, 24, 8),
             height: MediaQuery.of(context).size.height * 0.42,
             child: ListView.builder(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               scrollDirection: Axis.horizontal,
               itemCount: allNames.length,
               itemBuilder: (context, index) {
@@ -49,6 +51,8 @@ class GodNames extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height * 0.39,
             child: ListView.builder(
+              physics: BouncingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics()),
               scrollDirection: Axis.horizontal,
               itemCount: importances.length,
               itemBuilder: (context, index) {
@@ -69,6 +73,7 @@ unNome(BuildContext context, int index, String arabicName, String italianoName,
     padding: EdgeInsets.only(right: 20, left: 20),
     width: MediaQuery.of(context).size.width * 0.8,
     child: ListView(
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       children: [
         if (index % 2 == 0) SizedBox(height: 30),
         Column(
@@ -171,6 +176,7 @@ anImportance(BuildContext context, String title, String body) {
     padding: EdgeInsets.only(right: 20, left: 20),
     width: MediaQuery.of(context).size.width * 0.8,
     child: ListView(
+      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
       children: [
         SizedBox(height: 20),
         Container(

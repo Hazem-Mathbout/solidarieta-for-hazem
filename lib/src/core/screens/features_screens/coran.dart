@@ -19,6 +19,7 @@ class _CoranState extends State<Coran> {
         elevation: 0.0,
         title: Text(
           "القرآن الكريم",
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 24,
             color: Colors.black,
@@ -41,6 +42,8 @@ class _CoranState extends State<Coran> {
           children: [
             Expanded(
               child: ListView.builder(
+                  physics: BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                   itemCount: 114,
                   itemBuilder: (context, index) => mySura(index + 1)),
             ),

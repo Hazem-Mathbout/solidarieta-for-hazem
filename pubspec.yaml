@@ -52,12 +52,23 @@ dependencies:
   url_launcher: ^6.0.4
   location: ^4.1.1
   flutter_polyline_points: ^1.0.0
+  # change the app icon
+  # flutter_launcher_icons: ^0.9.0
+# options
+  in_app_review: ^2.0.2
+  share: ^2.0.4
   
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.9.0"
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app-logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

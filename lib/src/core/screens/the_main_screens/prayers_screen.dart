@@ -20,7 +20,8 @@ class PrayerTimings extends StatelessWidget {
       body: Consumer<Times>(builder: (context, data, child) {
         return Container(
           child: ListView(
-            physics: AlwaysScrollableScrollPhysics(),
+            physics:
+                BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
             padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 20.0),
             children: [
               Column(

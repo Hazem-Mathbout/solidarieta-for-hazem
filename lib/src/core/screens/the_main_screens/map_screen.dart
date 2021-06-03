@@ -14,6 +14,7 @@ import 'dart:math' show cos, sqrt, asin;
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/providers/mapProvider.dart';
 import 'package:solidarieta/src/helpers/constants/moschee.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MapDirection extends StatefulWidget {
   @override
@@ -125,8 +126,8 @@ class _MapDirectionState extends State<MapDirection> {
             },
           ),
           Positioned(
-            left: 30, // 18
-            top: 40,
+            right: 30, // 18
+            top: 90,
             child: Column(
               children: [
                 InkWell(
@@ -175,7 +176,7 @@ class _MapDirectionState extends State<MapDirection> {
                                 travel.updateTravelMode(TravelMode.walking);
                               }
 
-                              _getLocation();
+                              // _getLocation();
                               _chosenValue = value;
                             });
                           },
@@ -231,7 +232,7 @@ class _MapDirectionState extends State<MapDirection> {
                                 travel.updateMapType(MapType.satellite);
                               }
 
-                              _getLocation();
+                              // _getLocation();
                               _chosenValueTwo = value;
                             });
                           },
@@ -275,54 +276,91 @@ class _MapDirectionState extends State<MapDirection> {
           ),
           Positioned(
             bottom: 40,
-            left: 40,
-            child: InkWell(
-              child: Container(
-                width: 240,
-                margin: EdgeInsets.only(right: 60.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 1,
-                      offset: Offset(0, 0),
+            left: 20,
+            child: Column(
+              children: [
+                InkWell(
+                  onTap: () => openMap(currentMosque.latLng),
+                  child: Container(
+                    width: 240,
+                    margin: EdgeInsets.only(right: 60.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 1,
+                          offset: Offset(0, 0),
+                        ),
+                      ],
                     ),
-                  ],
+                    child: Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: Center(
+                          child: Text(
+                        "aprì l'indirizzo in google maps",
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: Colors.blue[600],
+                          fontWeight: FontWeight.w700,
+                        ),
+                      )),
+                    ),
+                  ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Center(
-                      child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "La moschea più vicina :",
-                        style: TextStyle(
-                          color: Colors.black,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        currentMosque.title,
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text(
-                        currentMosque.direction,
-                        style: TextStyle(
-                          // color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                SizedBox(height: 10),
+                Container(
+                  width: 240,
+                  margin: EdgeInsets.only(right: 60.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(0, 0),
                       ),
                     ],
-                  )),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Center(
+                        child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "La moschea più vicina :",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 12.0,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          currentMosque.title,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          currentMosque.direction,
+                          style: TextStyle(
+                            fontSize: 12.0,
+                            // color: Theme.of(context).primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ],
@@ -330,7 +368,7 @@ class _MapDirectionState extends State<MapDirection> {
     );
   }
 
-// get the map zoom depends on distance
+  // get the map zoom depends on distance
   double _getTheZoom(double distance) {
     if (distance < 1) {
       return 16;
@@ -342,7 +380,7 @@ class _MapDirectionState extends State<MapDirection> {
       return 13;
   }
 
-// add a Marker
+  // add a Marker
   _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
     MarkerId markerId = MarkerId(id);
     Marker marker =
@@ -350,20 +388,22 @@ class _MapDirectionState extends State<MapDirection> {
     markers[markerId] = marker;
   }
 
-// add polyline
+  // add polyline
   _addPolyLine(List<LatLng> polylineCoordinates) {
     PolylineId id = PolylineId("poly");
     Polyline polyline = Polyline(
+      endCap: Cap.roundCap,
+      startCap: Cap.roundCap,
       color: Colors.red,
       polylineId: id,
       points: polylineCoordinates,
-      width: 4,
+      width: 8,
     );
     polylines[id] = polyline;
     setState(() {});
   }
 
-// get the polylines
+  // get the polylines
   void _getPolyline() async {
     List<LatLng> polylineCoordinates = [];
     var travel = Provider.of<MapProvider>(context, listen: false);
@@ -383,7 +423,7 @@ class _MapDirectionState extends State<MapDirection> {
     _addPolyLine(polylineCoordinates);
   }
 
-// Distance between two locations
+  // Distance between two locations
   double _coordinateDistance(LatLng origin, LatLng dest) {
     var lat1 = origin.latitude;
     var lat2 = dest.latitude;
@@ -398,7 +438,7 @@ class _MapDirectionState extends State<MapDirection> {
     return 12742 * asin(sqrt(a));
   }
 
-// The nearest mosque to the current location
+  // The nearest mosque to the current location
   Moschea nearestMosque(List<Moschea> mosques, LatLng currentLocation) {
     var moschea = Provider.of<MapProvider>(context, listen: false);
     double distance = _coordinateDistance(mosques[0].latLng, currentLocation);
@@ -413,5 +453,17 @@ class _MapDirectionState extends State<MapDirection> {
     }
     moschea.updateCurrentMosque(nearest);
     return nearest;
+  }
+}
+
+Future<void> openMap(LatLng latLng) async {
+  double latitude = latLng.latitude;
+  double longitude = latLng.longitude;
+  String googleUrl =
+      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+  if (await canLaunch(googleUrl)) {
+    await launch(googleUrl);
+  } else {
+    throw 'Could not open the map.';
   }
 }

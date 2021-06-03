@@ -58,63 +58,67 @@ class _DuaaState extends State<Duaa> {
                 Citation data = snapshot.data;
                 return Padding(
                   padding: EdgeInsets.all(20),
-                  child: ListView(children: [
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Wrap(
-                        children: [
-                          for (var i = 0; i < 132; i++)
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          CitationDetails(id: i),
-                                    ));
-                              },
-                              child: Container(
-                                margin: EdgeInsets.all(6),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    topRight: i % 2 == 0
-                                        ? Radius.circular(15)
-                                        : Radius.circular(0),
-                                    bottomRight: i % 2 == 0
-                                        ? Radius.circular(15)
-                                        : Radius.circular(0),
-                                    topLeft: i % 2 != 0
-                                        ? Radius.circular(15)
-                                        : Radius.circular(0),
-                                    bottomLeft: i % 2 != 0
-                                        ? Radius.circular(15)
-                                        : Radius.circular(0),
-                                  ),
-                                  border: Border.all(color: color, width: 2),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(6.0),
-                                    child: Text(
-                                      "${i + 1} - " +
-                                          data.hisnulmuslim[i].title,
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontFamily: ArabicFonts.Cairo,
-                                        package: 'google_fonts_arabic',
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black,
+                  child: ListView(
+                      physics: BouncingScrollPhysics(
+                          parent: AlwaysScrollableScrollPhysics()),
+                      children: [
+                        Directionality(
+                          textDirection: TextDirection.rtl,
+                          child: Wrap(
+                            children: [
+                              for (var i = 0; i < 132; i++)
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CitationDetails(id: i),
+                                        ));
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.all(6),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                        topRight: i % 2 == 0
+                                            ? Radius.circular(15)
+                                            : Radius.circular(0),
+                                        bottomRight: i % 2 == 0
+                                            ? Radius.circular(15)
+                                            : Radius.circular(0),
+                                        topLeft: i % 2 != 0
+                                            ? Radius.circular(15)
+                                            : Radius.circular(0),
+                                        bottomLeft: i % 2 != 0
+                                            ? Radius.circular(15)
+                                            : Radius.circular(0),
+                                      ),
+                                      border:
+                                          Border.all(color: color, width: 2),
+                                    ),
+                                    child: Center(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(6.0),
+                                        child: Text(
+                                          "${i + 1} - " +
+                                              data.hisnulmuslim[i].title,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontFamily: ArabicFonts.Cairo,
+                                            package: 'google_fonts_arabic',
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                        ],
-                      ),
-                    ),
-                  ]),
+                            ],
+                          ),
+                        ),
+                      ]),
                 );
               } else if (snapshot.hasError) {
                 return Text("${snapshot.error}");
