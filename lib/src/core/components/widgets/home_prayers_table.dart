@@ -61,7 +61,6 @@ class Prayers extends StatelessWidget {
           Consumer<Times>(
             builder: (context, data, child) {
               return Container(
-                // height: 250,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(255, 255, 255, 0.8),
                   borderRadius: BorderRadius.all(
@@ -70,6 +69,8 @@ class Prayers extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 13),
+                  //TODO ~ Important to update prayer times every 24h because if the user didnt kill the app the times will not change
+                  // maybe you can use a Timer.periodic because it's a forground work
                   child: dayPrayers(data.getCurrentMonth(),
                       data.getCurrentDay(), data.getCurrentYear()),
                 ),
@@ -145,6 +146,7 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
 }
 
 dayPrayers(int mmonth, int dday, int yyear) {
+  // TODO ~ Utc Ofsset
   final milan = Coordinates(45.464664, 9.188540);
   final nyUtcOffset = Duration(hours: 2);
   final nyDate = DateComponents(yyear, mmonth, dday);
@@ -155,8 +157,6 @@ dayPrayers(int mmonth, int dday, int yyear) {
 
   return Column(
     children: [
-      // SizedBox(height: 30),
-
       aPrayer("Fajr", time(nyPrayerTimes.fajr), "20 min", Meteocons.fog_moon),
       aPrayer("Shoruq", time(nyPrayerTimes.sunrise), "", Meteocons.fog_sun),
       aPrayer("Duhr", time(nyPrayerTimes.dhuhr), "10 min", Meteocons.sun),

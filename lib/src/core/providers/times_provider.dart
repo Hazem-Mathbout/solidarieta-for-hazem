@@ -2,47 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:hijri/hijri_calendar.dart';
 
 class Times extends ChangeNotifier {
-  var _currentDateTime = DateTime.now();
-  int _currentDay = DateTime.now().day;
-  int _currentMonth = DateTime.now().month;
-  int _currentYear = DateTime.now().year;
-  int _currentHour = DateTime.now().hour;
-  int _currentMinute = DateTime.now().minute;
-  int _currentSeconde = DateTime.now().second;
-
-  int _currentDayHijri = HijriCalendar.now().hDay;
-  int _currentMonthHijri = HijriCalendar.now().hMonth;
-  int _currentYearHijri = HijriCalendar.now().hYear;
-
+  DateTime _currentDateTime = DateTime.now();
   getCurrentDateTime() => _currentDateTime;
+  getCurrentDay() => _currentDateTime.day;
+  getCurrentMonth() => _currentDateTime.month;
+  getCurrentYear() => _currentDateTime.year;
+  getCurrentHour() => _currentDateTime.hour;
+  getCurrentMinute() => _currentDateTime.minute;
+  getCurrentSeconde() => _currentDateTime.second;
 
-  String _currentMonthHijriName = HijriCalendar.now().longMonthName;
-  getCurrentMonthHijriName() => _currentMonthHijriName;
+  HijriCalendar _hijri = HijriCalendar.now();
+  getHijri() => _hijri;
 
-  getCurrentDay() => _currentDay;
-  getCurrentMonth() => _currentMonth;
-  getCurrentYear() => _currentYear;
-  getCurrentHour() => _currentHour;
-  getCurrentMinute() => _currentMinute;
-  getCurrentSeconde() => _currentSeconde;
-  getCurrentDayHijri() => _currentDayHijri;
-  getCurrentMonthHijri() => _currentMonthHijri;
-  getCurrentYearHijri() => _currentYearHijri;
+  getCurrentDayHijri() => _hijri.hDay;
+  getCurrentMonthHijri() => _hijri.hMonth;
+  getCurrentYearHijri() => _hijri.hYear;
+  getCurrentMonthHijriName() => _hijri.longMonthName;
 
   updateTimes() {
     _currentDateTime = DateTime.now();
-    _currentDay = DateTime.now().day;
-    _currentMonth = DateTime.now().month;
-    _currentYear = DateTime.now().year;
-    _currentHour = DateTime.now().hour;
-    _currentMinute = DateTime.now().minute;
-    _currentSeconde = DateTime.now().second;
-
-    _currentDayHijri = HijriCalendar.now().hDay;
-    _currentMonthHijri = HijriCalendar.now().hMonth;
-    _currentYearHijri = HijriCalendar.now().hYear;
-
-    _currentMonthHijriName = HijriCalendar.now().longMonthName;
+    _hijri = HijriCalendar.now();
 
     notifyListeners();
   }
