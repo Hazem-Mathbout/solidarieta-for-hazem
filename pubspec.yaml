@@ -85,6 +85,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/features/
+    - assets/images/socialmedia/
     - assets/svg/
     - assets/hisnulmuslimData.json
   #   - images/a_dot_ham.jpeg

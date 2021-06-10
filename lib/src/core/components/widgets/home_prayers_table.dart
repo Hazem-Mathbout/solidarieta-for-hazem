@@ -69,8 +69,6 @@ class Prayers extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 13),
-                  //TODO ~ Important to update prayer times every 24h because if the user didnt kill the app the times will not change
-                  // maybe you can use a Timer.periodic because it's a forground work
                   child: dayPrayers(data.getCurrentMonth(),
                       data.getCurrentDay(), data.getCurrentYear()),
                 ),
@@ -146,9 +144,12 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
 }
 
 dayPrayers(int mmonth, int dday, int yyear) {
-  // TODO ~ Utc Ofsset
   final milan = Coordinates(45.464664, 9.188540);
-  final nyUtcOffset = Duration(hours: 2);
+  int utc = 1;
+  // in italia UTC between 28 Mar - 31 Oct is : +2
+  if ((mmonth == 3 && dday >= 28) || (mmonth > 3 && mmonth < 11)) utc = 2;
+
+  final nyUtcOffset = Duration(hours: utc);
   final nyDate = DateComponents(yyear, mmonth, dday);
   final nyParams = CalculationMethod.north_america.getParameters();
   nyParams.madhab = Madhab.shafi;

@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:solidarieta/src/core/components/widgets/drawerLink.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/aboutUs.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/informazioni.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/moscheaProgetto.dart';
 
 SetLink notifications = SetLink(
     text: 'Notifiche',
     icon: LineAwesomeIcons.globe_with_europe_shown,
     color: Colors.orange);
 
-SetLink aboutTheApp = SetLink(
-  text: "Sull'App",
+SetLink aboutUs = SetLink(
+  text: "Sull'Associazione",
   icon: LineAwesomeIcons.comment_1,
   color: Colors.red,
 );
+SetLink infos = SetLink(
+  text: "Informazioni",
+  icon: LineAwesomeIcons.info,
+  color: Colors.green,
+);
+SetLink moscheaProgetto = SetLink(
+  text: "La nuova moschea",
+  icon: LineAwesomeIcons.mosque,
+  color: Colors.blue,
+);
+
 SetLink suonerie = SetLink(
   text: "Suonerie",
   icon: LineAwesomeIcons.bell,
@@ -23,24 +37,42 @@ SetLink shareIt = SetLink(
   color: Colors.black26,
   link: "share",
 );
+// ------------------------
+
+Uri facebooklink = Uri.parse(
+    "https://www.facebook.com/La-Solidarietà-Associazione-Tadaamun-101413525364171/");
+
 SetLink facebook = SetLink(
-  text: "facebook.com/lasolidarieta-mialn",
+  text: "Facebook : La Solidarietà",
   icon: LineAwesomeIcons.facebook_f,
-  color: Colors.black26,
-  link: 'https://www.facebook.com/',
+  color: Colors.black54,
+  link: facebooklink.toString(),
 );
 SetLink website = SetLink(
-  text: "www.lasolidarieta-mialn.com",
-  icon: LineAwesomeIcons.chrome,
-  color: Colors.black26,
-  link: 'https://www.google.com/',
-);
-SetLink twitter = SetLink(
-  text: "twitter.com/lasolidarieta-mialn",
-  icon: LineAwesomeIcons.twitter,
+  text: "Sito web dell'associazione",
+  icon: LineAwesomeIcons.mosque,
   color: Colors.black54,
-  link: "https://twitter.com/",
+  link: 'https://associazionesolidarieta.wordpress.com/',
 );
+SetLink youtube = SetLink(
+  text: "Youtube : ass.tadaamun",
+  icon: LineAwesomeIcons.youtube,
+  color: Colors.black54,
+  link: "https://www.youtube.com/channel/UCsSMvPkxn56890UVSB-AhsQ",
+);
+SetLink instagram = SetLink(
+  text: "Instagram : @ass.tadaamun",
+  icon: LineAwesomeIcons.instagram,
+  color: Colors.black54,
+  link: "https://www.instagram.com/ass.tadaamun/",
+);
+SetLink donation = SetLink(
+  text: "Donare per l'associazione",
+  icon: LineAwesomeIcons.donate,
+  color: Colors.black54,
+  link: "https://www.gofundme.com/f/associazione-la-solidariet",
+);
+// ------------------------
 SetLink feedback = SetLink(
   text: "Retroazione",
   icon: LineAwesomeIcons.star_1,
@@ -51,12 +83,14 @@ SetLink cookies = SetLink(
   text: "Cookie",
   icon: LineAwesomeIcons.cookie_bite,
   color: Colors.blueGrey,
+  link: "https://associazione-la-soli.flycricket.io/privacy.html",
 );
 
 SetLink condizioni = SetLink(
   text: "Condizioni generali di uso",
   icon: LineAwesomeIcons.alternate_file,
   color: Colors.blueGrey,
+  link: "https://associazione-la-soli.flycricket.io/terms.html",
 );
 SetLink privacy = SetLink(
   text: "Informativa sulla privacy",
@@ -118,15 +152,33 @@ class TheDrawer extends StatelessWidget {
                     children: [
                       Container(
                         color: Color.fromRGBO(50, 50, 51, 1),
-                        child: notifications,
-                      ),
-                      SizedBox(height: 30.0),
-                      Container(
-                        color: Color.fromRGBO(50, 50, 51, 1),
                         child: Column(
                           children: [
-                            aboutTheApp,
-                            suonerie,
+                            notifications,
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AboutUs(),
+                                  )),
+                              child: aboutUs,
+                            ),
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MoscheaProject(),
+                                  )),
+                              child: moscheaProgetto,
+                            ),
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Informazioni(),
+                                  )),
+                              child: infos,
+                            ),
                           ],
                         ),
                       ),
@@ -145,11 +197,11 @@ class TheDrawer extends StatelessWidget {
                         color: Color.fromRGBO(50, 50, 51, 1),
                         child: Column(
                           children: [
-                            shareIt,
                             facebook,
                             website,
-                            twitter,
-                            feedback,
+                            youtube,
+                            instagram,
+                            donation,
                           ],
                         ),
                       ),
@@ -157,6 +209,19 @@ class TheDrawer extends StatelessWidget {
                       Center(
                         child: Text(
                           "© 2021 Copyright Associazione La Solidarietà",
+                          textAlign: TextAlign.center,
+                          textScaleFactor: 1.1,
+                          style: TextStyle(
+                            fontSize: 10.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w200,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      Center(
+                        child: Text(
+                          "Developer : idboubker1998@gmail.com",
                           textAlign: TextAlign.center,
                           textScaleFactor: 1.1,
                           style: TextStyle(

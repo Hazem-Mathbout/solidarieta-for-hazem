@@ -29,6 +29,7 @@ class _MapDirectionState extends State<MapDirection> {
   final Location location = Location();
 
   LocationData _location;
+  // ignore: unused_field
   String _error;
   LatLng _originLoc = LatLng(0, 0);
   LatLng _destinationLoc =

@@ -22,9 +22,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color.fromRGBO(0, 133, 119, 1),
-        accentColor: Color.fromRGBO(122, 88, 49, 1),
       ),
       home: SplashScreen(),
     );
   }
 }
+
+// Access to dashboard ( https://app.flycricket.com/ )  email: id22boubker@gmail.com - pass: soso980
+// Privacy Policy : https://associazione-la-soli.flycricket.io/privacy.html
+// Terms of service : https://associazione-la-soli.flycricket.io/terms.html
+
+// access : id22boubker@gmail.com - soso8989@
+// http://lasolidarieta.rf.gd/termsandconditions.html?i=1
+// http://lasolidarieta.rf.gd/privacypolicy.html

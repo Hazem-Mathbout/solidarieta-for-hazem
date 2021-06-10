@@ -79,19 +79,20 @@ class _DuaaState extends State<Duaa> {
                                   child: Container(
                                     margin: EdgeInsets.all(6),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: i % 2 == 0
-                                            ? Radius.circular(15)
-                                            : Radius.circular(0),
-                                        bottomRight: i % 2 == 0
-                                            ? Radius.circular(15)
-                                            : Radius.circular(0),
-                                        topLeft: i % 2 != 0
-                                            ? Radius.circular(15)
-                                            : Radius.circular(0),
-                                        bottomLeft: i % 2 != 0
-                                            ? Radius.circular(15)
-                                            : Radius.circular(0),
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
+                                        // topRight: i % 2 == 0
+                                        //     ? Radius.circular(15)
+                                        //     : Radius.circular(0),
+                                        // bottomRight: i % 2 == 0
+                                        //     ? Radius.circular(15)
+                                        //     : Radius.circular(0),
+                                        // topLeft: i % 2 != 0
+                                        //     ? Radius.circular(15)
+                                        //     : Radius.circular(0),
+                                        // bottomLeft: i % 2 != 0
+                                        //     ? Radius.circular(15)
+                                        //     : Radius.circular(0),
                                       ),
                                       border:
                                           Border.all(color: color, width: 2),
