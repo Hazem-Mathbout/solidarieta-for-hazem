@@ -30,14 +30,14 @@ class SetLink extends StatelessWidget {
             }
           : null,
       child: Container(
-        height: 37.0,
+        padding: EdgeInsets.only(top: 10),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             SizedBox(height: 0.0),
             Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+              padding: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 7.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,8 +45,7 @@ class SetLink extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        height: 24.0,
-                        width: 24.0,
+                        padding: EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           color: color,
                           borderRadius: BorderRadius.all(
@@ -60,11 +59,13 @@ class SetLink extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 12.0),
-                      Text(
-                        text,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17.0,
+                      Container(
+                        child: Text(
+                          text,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17.0,
+                          ),
                         ),
                       ),
                     ],

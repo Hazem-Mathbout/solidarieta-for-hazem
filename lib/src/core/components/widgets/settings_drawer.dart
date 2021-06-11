@@ -4,6 +4,7 @@ import 'package:solidarieta/src/core/components/widgets/drawerLink.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/aboutUs.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/informazioni.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/moscheaProgetto.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/notificationsSettings.dart';
 
 SetLink notifications = SetLink(
     text: 'Notifiche',
@@ -67,7 +68,7 @@ SetLink instagram = SetLink(
   link: "https://www.instagram.com/ass.tadaamun/",
 );
 SetLink donation = SetLink(
-  text: "Donare per l'associazione",
+  text: "Donare per l'associazione ",
   icon: LineAwesomeIcons.donate,
   color: Colors.black54,
   link: "https://www.gofundme.com/f/associazione-la-solidariet",
@@ -154,7 +155,15 @@ class TheDrawer extends StatelessWidget {
                         color: Color.fromRGBO(50, 50, 51, 1),
                         child: Column(
                           children: [
-                            notifications,
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        NotificationsSettings(),
+                                  )),
+                              child: notifications,
+                            ),
                             InkWell(
                               onTap: () => Navigator.push(
                                   context,

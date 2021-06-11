@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:solidarieta/home.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/onboarding_screens.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -9,12 +11,26 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    var isSeen = Hive.box('onboarding');
+    // bool seen = isSeen.get("seen");
+
+    if (isSeen.get("seen") == null) isSeen.put("seen", false);
+
     super.initState();
-    new Future.delayed(
-        Duration(seconds: 4),
+    Future.delayed(
+        const Duration(seconds: 3),
         () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(
+                builder: (context) {
+                  if (isSeen.get("seen")) {
+                    return HomeScreen();
+                  } else {
+                    isSeen.put("seen", true);
+                    return OnBoardingPage();
+                  }
+                },
+              ),
             ));
   }
 

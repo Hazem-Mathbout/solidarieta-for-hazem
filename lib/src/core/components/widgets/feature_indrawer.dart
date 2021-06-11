@@ -3,8 +3,6 @@ import 'package:solidarieta/src/core/screens/features_screens/coran.dart';
 import 'package:solidarieta/src/core/screens/features_screens/duaa.dart';
 import 'package:solidarieta/src/core/screens/features_screens/god_names.dart';
 import 'package:solidarieta/src/core/screens/features_screens/hadith.dart';
-import 'package:solidarieta/src/core/screens/features_screens/haj.dart';
-import 'package:solidarieta/src/core/screens/features_screens/omra.dart';
 
 class Feature extends StatefulWidget {
   final String title;
@@ -23,7 +21,7 @@ class Feature extends StatefulWidget {
 }
 
 class _FeatureState extends State<Feature> {
-  List featureScreens = [Coran(), Hadith(), GodNames(), Haj(), Omra(), Duaa()];
+  List featureScreens = [Coran(), Hadith(), GodNames(), Duaa()];
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -35,7 +33,6 @@ class _FeatureState extends State<Feature> {
         padding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 1.0),
         child: Container(
           height: 80.0,
-          // width: MediaQuery.of(context).size.width / 2 - 30,
           decoration: BoxDecoration(
             color: Color.fromRGBO(50, 50, 51, 1),
             image: DecorationImage(

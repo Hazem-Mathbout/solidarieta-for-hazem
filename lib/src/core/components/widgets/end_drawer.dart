@@ -29,25 +29,11 @@ class _DrawerMenuState extends State<DrawerMenu> {
     index: 2,
   );
 
-  Feature hajj = Feature(
-    imgUrl: "assets/images/features/kaaba.jpg",
-    color: Colors.yellow,
-    title: "Pellegrinaggio\nالحج",
-    index: 3,
-  );
-
-  Feature omra = Feature(
-    imgUrl: "assets/images/features/masjid_nabawi.jpg",
-    color: Colors.green,
-    title: "Umrah\nالعمرة",
-    index: 4,
-  );
-
   Feature duaa = Feature(
     imgUrl: "assets/images/features/duaa.jpg",
     color: Colors.pink,
     title: "La supplica\nحصن المسلم",
-    index: 5,
+    index: 3,
   );
 
   @override

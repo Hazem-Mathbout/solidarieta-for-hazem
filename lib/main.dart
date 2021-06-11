@@ -1,17 +1,31 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
 import 'package:solidarieta/src/core/providers/mapProvider.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/splash_screen.dart';
 
-void main() => runApp(
-      MultiProvider(providers: [
-        ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
-        ChangeNotifierProvider(create: (context) => Times()),
-        ChangeNotifierProvider(create: (context) => MapProvider()),
-      ], child: MyApp()),
-    );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // -------------- Hive ------------------- Start
+  Directory appDocDir = await getApplicationDocumentsDirectory();
+  String appDocPath = appDocDir.path;
+  await Hive.initFlutter(appDocPath);
+  await Hive.openBox('onboarding');
+  // -------------- Hive ------------------- End
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
+      ChangeNotifierProvider(create: (context) => Times()),
+      ChangeNotifierProvider(create: (context) => MapProvider()),
+    ], child: MyApp()),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override

@@ -18,6 +18,10 @@ PODS:
     - Flutter
   - location (0.0.1):
     - Flutter
+  - notification_permissions (0.4.4):
+    - Flutter
+  - path_provider (0.0.1):
+    - Flutter
   - share (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -31,6 +35,8 @@ DEPENDENCIES:
   - google_maps_flutter (from `.symlinks/plugins/google_maps_flutter/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - notification_permissions (from `.symlinks/plugins/notification_permissions/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
@@ -53,6 +59,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/in_app_review/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  notification_permissions:
+    :path: ".symlinks/plugins/notification_permissions/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   url_launcher:
@@ -67,6 +77,8 @@ SPEC CHECKSUMS:
   GoogleMaps: 008e2c80e38605b56b560e8deb73d4194ff30bef
   in_app_review: 4a97249f7a2f539a0f294c2d9196b7fe35e49541
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
+  notification_permissions: b74860c2967c1579243a675e63cd55e0ae75cef7
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
