@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:location/location.dart';
-import 'package:notification_permissions/notification_permissions.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 import 'package:solidarieta/home.dart';
 
 class OnBoardingPage extends StatefulWidget {
@@ -103,8 +104,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           footer: InkWell(
             onTap: () {
               // ignore: unused_local_variable
-              Future permissionStatus =
-                  NotificationPermissions.requestNotificationPermissions();
+              // Future permissionStatus =
+              //     NotificationPermissions.requestNotificationPermissions();
+              Permission.notification.request();
             },
             child: Padding(
               padding: const EdgeInsets.only(top: 30.0),

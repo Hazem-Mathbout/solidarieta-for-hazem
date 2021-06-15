@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:solidarieta/src/core/components/widgets/drawerLink.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/aboutUs.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/informazioni.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/moscheaProgetto.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/notificationsSettings.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 SetLink notifications = SetLink(
     text: 'Notifiche',
@@ -97,16 +100,24 @@ SetLink privacy = SetLink(
   text: "Informativa sulla privacy",
   icon: LineAwesomeIcons.alternate_list,
   color: Colors.blueGrey,
-);
-SetLink legale = SetLink(
-  text: "Area legale",
-  icon: LineAwesomeIcons.alternate_shield,
-  color: Colors.blueGrey,
+  link: "https://associazione-la-soli.flycricket.io/terms.html",
 );
 
-class TheDrawer extends StatelessWidget {
+class TheDrawer extends StatefulWidget {
+  @override
+  State<TheDrawer> createState() => _TheDrawerState();
+}
+
+class _TheDrawerState extends State<TheDrawer> {
+  @override
+  void initState() {
+    Permission.notification.request();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    String year = DateTime.now().year.toString();
     return Theme(
       data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
       child: Container(
@@ -217,7 +228,7 @@ class TheDrawer extends StatelessWidget {
                       SizedBox(height: 30.0),
                       Center(
                         child: Text(
-                          "© 2021 Copyright Associazione La Solidarietà",
+                          "© $year Copyright Associazione La Solidarietà",
                           textAlign: TextAlign.center,
                           textScaleFactor: 1.1,
                           style: TextStyle(
@@ -229,14 +240,17 @@ class TheDrawer extends StatelessWidget {
                       ),
                       SizedBox(height: 10.0),
                       Center(
-                        child: Text(
-                          "Developer : idboubker1998@gmail.com",
-                          textAlign: TextAlign.center,
-                          textScaleFactor: 1.1,
-                          style: TextStyle(
-                            fontSize: 10.0,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w200,
+                        child: InkWell(
+                          onTap: _launchMailClient,
+                          child: Text(
+                            "Developer : idboubker1998@gmail.com",
+                            textAlign: TextAlign.center,
+                            textScaleFactor: 1.1,
+                            style: TextStyle(
+                              fontSize: 10.0,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w200,
+                            ),
                           ),
                         ),
                       ),
@@ -250,5 +264,14 @@ class TheDrawer extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+void _launchMailClient() async {
+  const mailUrl = 'mailto:smith@example.org?subject=Help&body=I%20need%20help!';
+  try {
+    await launch(mailUrl);
+  } catch (e) {
+    throw 'Could not launch $e';
   }
 }
