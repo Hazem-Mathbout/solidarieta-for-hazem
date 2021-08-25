@@ -2,6 +2,7 @@ import 'package:arabic_numbers/arabic_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:quran/quran.dart' as quran;
+import 'package:solidarieta/src/helpers/constants/suraArabicName.dart';
 
 class TheSuraScreen extends StatelessWidget {
   final int suraNum;
@@ -60,7 +61,7 @@ class TheSuraScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "سورة " + quran.getSuraArabicName(suraNum),
+                              "سورة " + getSuraArabicName(suraNum),
                               // "سورة " + arabicNumber.convert(suraNum),
                               style: TextStyle(
                                 fontSize: 30,

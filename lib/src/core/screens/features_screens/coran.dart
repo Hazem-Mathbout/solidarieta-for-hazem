@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:quran/quran.dart' as quran;
+import 'package:solidarieta/src/helpers/constants/suraArabicName.dart';
 import 'package:solidarieta/src/core/screens/features_screens/sura_screen.dart';
 
 class Coran extends StatefulWidget {
@@ -108,7 +109,7 @@ class _CoranState extends State<Coran> {
                             ),
                           ),
                           Text(
-                            "سورة " + quran.getSuraArabicName(surahNumber),
+                            "سورة " + getSuraArabicName(surahNumber),
                             // "سورة  " + arabicNumber.convert(surahNumber),
                             style: TextStyle(
                               fontSize: 17.0,
