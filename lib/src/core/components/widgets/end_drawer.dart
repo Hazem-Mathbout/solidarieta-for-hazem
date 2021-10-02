@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:solidarieta/home.dart';
 import 'package:solidarieta/src/core/components/widgets/feature_indrawer.dart';
 
 class DrawerMenu extends StatefulWidget {
@@ -36,13 +38,19 @@ class _DrawerMenuState extends State<DrawerMenu> {
     index: 3,
   );
 
+  Feature childrenSpace = Feature(
+    imgUrl: "assets/images/features/children.jpeg",
+    color: Colors.green,
+    title: "Per bambini\nتعليم الاطفال",
+    index: 4,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: Theme.of(context).copyWith(canvasColor: Colors.transparent),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        // color: Colors.black87,
         color: Colors.grey[500],
         child: Drawer(
           elevation: 0,
@@ -65,9 +73,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                         ),
                       ),
                       IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
+                        onPressed: () => Navigator.of(context).pop(),
                         icon: Icon(
                           LineAwesomeIcons.chevron_circle_left,
                           color: Colors.white,
@@ -86,9 +92,8 @@ class _DrawerMenuState extends State<DrawerMenu> {
                       quran,
                       hadith,
                       names,
-                      // hajj,
-                      // omra,
                       duaa,
+                      childrenSpace,
                     ],
                   ),
                 ),

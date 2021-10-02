@@ -80,7 +80,7 @@ Prayer getNextPrayer() {
   return nextPrayer;
 }
 
-// TODO : Be careful it can return a negative value : Solution - don't send notification if it is negative
+// ODO : Be careful it can return a negative value : Solution - don't send notification if it is negative
 int timeToNextPrayer(Prayer nextPrayer) {
   int nowH = DateTime.now().hour;
   int nowM = DateTime.now().minute;

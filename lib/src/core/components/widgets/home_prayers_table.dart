@@ -9,7 +9,6 @@ class Prayers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // height: 305,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
         borderRadius: BorderRadius.all(
@@ -144,17 +143,11 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
 }
 
 dayPrayers(int mmonth, int dday, int yyear) {
-  final milan = Coordinates(45.464664, 9.188540);
-  int utc = 1;
-  // in italia UTC between 28 Mar - 31 Oct is : +2
-  if ((mmonth == 3 && dday >= 28) || (mmonth > 3 && mmonth < 11)) utc = 2;
-
-  final nyUtcOffset = Duration(hours: utc);
+  final coordinates = Coordinates(45.464664, 9.188540);
   final nyDate = DateComponents(yyear, mmonth, dday);
   final nyParams = CalculationMethod.north_america.getParameters();
   nyParams.madhab = Madhab.shafi;
-  final nyPrayerTimes =
-      PrayerTimes(milan, nyDate, nyParams, utcOffset: nyUtcOffset);
+  final nyPrayerTimes = PrayerTimes(coordinates, nyDate, nyParams);
 
   return Column(
     children: [

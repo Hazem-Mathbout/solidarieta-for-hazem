@@ -65,6 +65,8 @@ dependencies:
   # notification_permissions: ^0.5.0
   permission_handler: ^8.0.1
   flutter_switch: ^0.3.1
+
+  youtube_player_flutter: ^8.0.0
   
   
 

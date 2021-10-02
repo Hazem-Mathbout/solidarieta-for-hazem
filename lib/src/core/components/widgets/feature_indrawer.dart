@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:solidarieta/src/core/screens/features_screens/children_space/youtube_videos_embedding.dart';
 import 'package:solidarieta/src/core/screens/features_screens/coran.dart';
 import 'package:solidarieta/src/core/screens/features_screens/duaa.dart';
 import 'package:solidarieta/src/core/screens/features_screens/god_names.dart';
@@ -21,7 +22,13 @@ class Feature extends StatefulWidget {
 }
 
 class _FeatureState extends State<Feature> {
-  List featureScreens = [Coran(), Hadith(), GodNames(), Duaa()];
+  List featureScreens = [
+    Coran(),
+    Hadith(),
+    GodNames(),
+    Duaa(),
+    YoutubeVideosEmbedding(),
+  ];
   @override
   Widget build(BuildContext context) {
     return InkWell(

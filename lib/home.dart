@@ -20,7 +20,6 @@ final globalKey = GlobalKey<ScaffoldState>();
 class _HomeScreenState extends State<HomeScreen> {
   List pages = [
     Calendar(),
-    // Blogs(),
     PrayerTimings(),
     MapDirection(),
     Qibla(),
