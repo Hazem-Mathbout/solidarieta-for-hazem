@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts_arabic/fonts.dart';
 import 'package:quran/quran.dart' as quran;
-import 'package:solidarieta/src/core/components/widgets/suraArabicName.dart';
 import 'package:solidarieta/src/core/screens/features_screens/sura_screen.dart';
+import 'package:solidarieta/src/helpers/constants/suraArabicName.dart';
 
 class Coran extends StatefulWidget {
   @override
