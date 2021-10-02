@@ -305,7 +305,7 @@ class _VideoPageState extends State<VideoPage> {
                       itemCount: widget.videosList.length,
                       itemBuilder: (context, item) {
                         return InkWell(
-                          onTap: () => Navigator.push(
+                          onTap: () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => VideoPage(
