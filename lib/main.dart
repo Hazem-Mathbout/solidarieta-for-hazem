@@ -13,13 +13,13 @@ import 'package:solidarieta/src/core/screens/fixed_screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // -------------- Hive ------------------- Start
+  // -------------- Hive -------------------
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   await Hive.initFlutter(appDocPath);
   await Hive.openBox('onboarding');
   await Hive.openBox('notifications');
-  // -------------- Hive ------------------- End
+  // -------------- Hive -------------------
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
