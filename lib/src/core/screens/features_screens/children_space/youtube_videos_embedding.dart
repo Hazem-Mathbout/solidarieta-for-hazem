@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:solidarieta/src/core/components/widgets/end_drawer.dart';
 
 import 'package:solidarieta/src/core/screens/features_screens/children_space/videos_lists.dart';
 

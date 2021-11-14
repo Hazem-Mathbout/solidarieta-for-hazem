@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/components/widgets/date_in_italiano.dart';
 import 'package:solidarieta/src/core/components/widgets/home_prayers_table.dart';
+import 'package:solidarieta/src/core/providers/prayers_configuration_provider.dart.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/prayers_time_configuration.dart';
 
 class PrayerTimings extends StatelessWidget {
   @override
@@ -14,7 +16,7 @@ class PrayerTimings extends StatelessWidget {
     Timer.periodic(Duration(seconds: 1), (t) {
       time.updateTimes();
     });
-
+    var settings = Provider.of<PrayerSettingsProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Consumer<Times>(builder: (context, data, child) {
@@ -58,6 +60,50 @@ class PrayerTimings extends StatelessWidget {
               ),
               SizedBox(height: 30),
               Prayers(),
+              SizedBox(height: 10),
+              Container(
+                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          settings.getCurrentLocationDescription(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PrayersTimeConfigurations(),
+                            )),
+                        child: Container(
+                          padding: EdgeInsets.all(6),
+                          margin: EdgeInsets.only(left: 7),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                          ),
+                          child: Icon(
+                            Icons.edit,
+                            size: 15,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
             ],
           ),
         );

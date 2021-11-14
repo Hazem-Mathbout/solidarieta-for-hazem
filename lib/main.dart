@@ -9,6 +9,7 @@ import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
 import 'package:solidarieta/src/core/providers/mapProvider.dart';
 import 'package:solidarieta/src/core/providers/notificationsProvider.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
+import 'package:solidarieta/src/core/providers/prayers_configuration_provider.dart.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/splash_screen.dart';
 
 void main() async {
@@ -19,6 +20,7 @@ void main() async {
   await Hive.initFlutter(appDocPath);
   await Hive.openBox('onboarding');
   await Hive.openBox('notifications');
+  await Hive.openBox('prayers');
   // -------------- Hive -------------------
   runApp(
     MultiProvider(providers: [
@@ -26,6 +28,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => Times()),
       ChangeNotifierProvider(create: (context) => NotificationsProvider()),
       ChangeNotifierProvider(create: (context) => MapProvider()),
+      ChangeNotifierProvider(create: (context) => PrayerSettingsProvider()),
     ], child: MyApp()),
   );
 }

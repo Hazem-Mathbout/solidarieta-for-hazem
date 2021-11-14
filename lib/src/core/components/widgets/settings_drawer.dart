@@ -6,12 +6,17 @@ import 'package:solidarieta/src/core/screens/fixed_screens/aboutUs.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/informazioni.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/moscheaProgetto.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/notificationsSettings.dart';
+import 'package:solidarieta/src/core/screens/fixed_screens/prayers_time_configuration.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 SetLink notifications = SetLink(
     text: 'Notifiche',
     icon: LineAwesomeIcons.globe_with_europe_shown,
     color: Colors.orange);
+SetLink configurazioniOrari = SetLink(
+    text: 'Configurazioni orari',
+    icon: LineAwesomeIcons.clock_1,
+    color: Colors.purple);
 
 SetLink aboutUs = SetLink(
   text: "Sull'Associazione",
@@ -178,6 +183,15 @@ class _TheDrawerState extends State<TheDrawer> {
                               onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
+                                    builder: (context) =>
+                                        PrayersTimeConfigurations(),
+                                  )),
+                              child: configurazioniOrari,
+                            ),
+                            InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
                                     builder: (context) => AboutUs(),
                                   )),
                               child: aboutUs,
@@ -242,7 +256,7 @@ class _TheDrawerState extends State<TheDrawer> {
                         child: InkWell(
                           onTap: _launchMailClient,
                           child: Text(
-                            "Developer : idboubker1998@gmail.com",
+                            "Developer : abdell.contact@gmail.com",
                             textAlign: TextAlign.center,
                             textScaleFactor: 1.1,
                             style: TextStyle(
@@ -267,7 +281,9 @@ class _TheDrawerState extends State<TheDrawer> {
 }
 
 void _launchMailClient() async {
-  const mailUrl = 'mailto:smith@example.org?subject=Help&body=I%20need%20help!';
+  // %20
+  const mailUrl =
+      'mailto:abdell.contact@gmail.com?subject=Message%20from%20Solidarieta%20App%20user&body=Hello';
   try {
     await launch(mailUrl);
   } catch (e) {

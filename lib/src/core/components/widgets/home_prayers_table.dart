@@ -4,10 +4,12 @@ import 'package:fluttericon/meteocons_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
+import 'package:solidarieta/src/core/providers/prayers_configuration_provider.dart.dart';
 
 class Prayers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var settings = Provider.of<PrayerSettingsProvider>(context, listen: true);
     return Container(
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
@@ -68,8 +70,14 @@ class Prayers extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 13),
-                  child: dayPrayers(data.getCurrentMonth(),
-                      data.getCurrentDay(), data.getCurrentYear()),
+                  child: dayPrayers(
+                      data.getCurrentMonth(),
+                      data.getCurrentDay(),
+                      data.getCurrentYear(),
+                      settings.getCurrentCalculationMethod(),
+                      settings.getCurrentMadhab(),
+                      settings.getCurrentLat(),
+                      settings.getCurrentLong()),
                 ),
               );
             },
@@ -84,7 +92,6 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: 2.0, horizontal: 10),
     child: Container(
-      // height: 35,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 133, 119, 1),
         borderRadius: BorderRadius.all(
@@ -142,11 +149,28 @@ aPrayer(String preghiera, String adhan, String attesa, IconData icon) {
   );
 }
 
-dayPrayers(int mmonth, int dday, int yyear) {
-  final coordinates = Coordinates(45.464664, 9.188540);
+dayPrayers(int mmonth, int dday, int yyear, int method, int madhab, double lat,
+    double long) {
+  List<CalculationMethod> methods = [
+    CalculationMethod.north_america,
+    CalculationMethod.dubai,
+    CalculationMethod.egyptian,
+    CalculationMethod.karachi,
+    CalculationMethod.kuwait,
+    CalculationMethod.moon_sighting_committee,
+    CalculationMethod.muslim_world_league,
+    CalculationMethod.qatar,
+    CalculationMethod.singapore,
+    CalculationMethod.tehran,
+    CalculationMethod.turkey,
+    CalculationMethod.umm_al_qura,
+  ];
+  List<Madhab> madhabs = [Madhab.shafi, Madhab.hanafi];
+
+  final coordinates = Coordinates(lat, long);
   final nyDate = DateComponents(yyear, mmonth, dday);
-  final nyParams = CalculationMethod.north_america.getParameters();
-  nyParams.madhab = Madhab.shafi;
+  final nyParams = methods[method].getParameters();
+  nyParams.madhab = madhabs[madhab];
   final nyPrayerTimes = PrayerTimes(coordinates, nyDate, nyParams);
 
   return Column(

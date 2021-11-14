@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:solidarieta/src/core/components/widgets/date_in_italiano.dart';
+import 'package:solidarieta/src/core/providers/prayers_configuration_provider.dart.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
 
 class Calendar extends StatefulWidget {
@@ -16,6 +17,7 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     int _currentMonthLength;
     monthFormat = DateFormat.MMMM('it');
+    var settings = Provider.of<PrayerSettingsProvider>(context, listen: true);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -88,8 +90,14 @@ class _CalendarState extends State<Calendar> {
                   child: ListView.builder(
                       itemCount: _currentMonthLength,
                       itemBuilder: (context, index) {
-                        PrayerTimes day = dayPrayers(data.getCurrentMonth(),
-                            index + 1, data.getCurrentYear());
+                        PrayerTimes day = dayPrayers(
+                            data.getCurrentMonth(),
+                            index + 1,
+                            data.getCurrentYear(),
+                            settings.getCurrentCalculationMethod(),
+                            settings.getCurrentMadhab(),
+                            settings.getCurrentLat(),
+                            settings.getCurrentLong());
 
                         return rowee(index + 1, day.fajr, day.sunrise,
                             day.dhuhr, day.asr, day.maghrib, day.isha);
@@ -135,13 +143,29 @@ rowee(int day, DateTime fajr, DateTime shoruq, DateTime duhr, DateTime asr,
   );
 }
 
-PrayerTimes dayPrayers(int mmonth, int dday, int yyear) {
-  final milan = Coordinates(45.464664, 9.188540);
-  final nyUtcOffset = Duration(hours: 2);
+PrayerTimes dayPrayers(int mmonth, int dday, int yyear, int method, int madhab,
+    double lat, double long) {
+  List<CalculationMethod> methods = [
+    CalculationMethod.north_america,
+    CalculationMethod.dubai,
+    CalculationMethod.egyptian,
+    CalculationMethod.karachi,
+    CalculationMethod.kuwait,
+    CalculationMethod.moon_sighting_committee,
+    CalculationMethod.muslim_world_league,
+    CalculationMethod.qatar,
+    CalculationMethod.singapore,
+    CalculationMethod.tehran,
+    CalculationMethod.turkey,
+    CalculationMethod.umm_al_qura,
+  ];
+  List<Madhab> madhabs = [Madhab.shafi, Madhab.hanafi];
+
+  final milan = Coordinates(lat, long);
   final nyDate = DateComponents(yyear, mmonth, dday);
-  final nyParams = CalculationMethod.north_america.getParameters();
-  nyParams.madhab = Madhab.shafi;
-  return PrayerTimes(milan, nyDate, nyParams, utcOffset: nyUtcOffset);
+  final nyParams = methods[method].getParameters();
+  nyParams.madhab = madhabs[madhab];
+  return PrayerTimes(milan, nyDate, nyParams);
   // final nyPrayerTimes =
   //     PrayerTimes(milan, nyDate, nyParams, utcOffset: nyUtcOffset);
 }
