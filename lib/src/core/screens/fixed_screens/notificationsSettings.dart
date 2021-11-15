@@ -4,6 +4,10 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:solidarieta/main.dart';
+import 'package:solidarieta/src/core/models/hazem/notification_service.dart';
+import 'package:solidarieta/src/core/models/hazem/prayerModel.dart';
 import 'package:solidarieta/src/core/providers/notificationsProvider.dart';
 
 class NotificationsSettings extends StatefulWidget {
@@ -16,7 +20,7 @@ class NotificationsSettings extends StatefulWidget {
 class _NotificationsSettingsState extends State<NotificationsSettings> {
   List<String> pyr = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha'a"];
 
-//   ---------------------------------------
+  //   ---------------------------------------
   PermissionStatus status;
   bool isLoading = false;
   String notState = "nothing";
@@ -42,10 +46,11 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
     checkNotificationsPermession();
     super.initState();
   }
-//   ---------------------------------------
+  //   ---------------------------------------
 
   @override
   Widget build(BuildContext context) {
+    List<Prayer> prayers = getPrayers();
     var notifications =
         Provider.of<NotificationsProvider>(context, listen: false);
     if (notState == "granted") {
@@ -88,6 +93,7 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                 child: ListView.builder(
                   itemCount: notifications.getNotifications().length,
                   itemBuilder: (context, index) {
+                    Prayer pr = prayers[index];
                     List<bool> list = notifications.getNotifications();
                     return Container(
                       decoration: BoxDecoration(
@@ -132,11 +138,12 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                                     value: list[index],
                                     padding: 8.0,
                                     showOnOff: true,
-                                    onToggle: (value) {
+                                    onToggle: (value) async {
                                       setState(() {
                                         notifications
                                             .updateNotifications(index);
                                       });
+                                      await onToggleUser(list, index, pr);
                                     },
                                   ),
                                 ),
@@ -220,6 +227,20 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
           ],
         ),
       );
+    }
+  }
+
+  Future<void> onToggleUser(List<bool> list, int index, Prayer pr) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String getKeyForPrayer = index.toString();
+    int notificationID = prefs.getInt(getKeyForPrayer);
+
+    if (list[index] == true) {
+      await flutterLocalNotificationsPlugin.cancel(notificationID);
+    }
+    if (list[index] == false) {
+      await scheduleAlarm(notificationID, getTitlePrayer(pr.name),
+          getBodyPrayer(pr.name), pr.name);
     }
   }
 }

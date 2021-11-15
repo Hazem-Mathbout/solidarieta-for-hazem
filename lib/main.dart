@@ -1,16 +1,22 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:solidarieta/src/core/models/hazem/notification_service.dart';
 import 'package:solidarieta/src/core/providers/bottom_navbar_index.dart';
 import 'package:solidarieta/src/core/providers/mapProvider.dart';
 import 'package:solidarieta/src/core/providers/notificationsProvider.dart';
 import 'package:solidarieta/src/core/providers/times_provider.dart';
 import 'package:solidarieta/src/core/providers/prayers_configuration_provider.dart.dart';
 import 'package:solidarieta/src/core/screens/fixed_screens/splash_screen.dart';
+import 'package:workmanager/workmanager.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +28,15 @@ void main() async {
   await Hive.openBox('notifications');
   await Hive.openBox('prayers');
   // -------------- Hive -------------------
+
+// --------------WorkManager--------------Start
+
+  await Workmanager().initialize(callBackDispatcher, isInDebugMode: true);
+  Workmanager().registerPeriodicTask("notifyPeriodicTask", "prayer",
+      frequency: const Duration(days: 1));
+
+  // --------------WorkManager--------------End
+
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),

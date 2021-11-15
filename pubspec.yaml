@@ -70,8 +70,15 @@ dependencies:
   youtube_player_flutter: ^8.0.0
 
   geocoding: ^2.0.1
+
+
+  # hazems
+  flutter_local_notifications: ^9.0.0
+  workmanager: ^0.4.1
+  shared_preferences: any #^2.0.8
+  flutter_native_timezone: ^2.0.0
   
-  
+
 
 dev_dependencies:
   flutter_test:
