@@ -9,6 +9,7 @@ import 'package:solidarieta/main.dart';
 import 'package:solidarieta/src/core/models/hazem/notification_service.dart';
 import 'package:solidarieta/src/core/models/hazem/prayerModel.dart';
 import 'package:solidarieta/src/core/providers/notificationsProvider.dart';
+import 'package:solidarieta/src/core/models/hazem/notifications_state.dart';
 
 class NotificationsSettings extends StatefulWidget {
   const NotificationsSettings({Key key}) : super(key: key);
@@ -234,13 +235,14 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String getKeyForPrayer = index.toString();
     int notificationID = prefs.getInt(getKeyForPrayer);
-
     if (list[index] == true) {
+      await updateSharedPrefrences(pr.name, list[index]);
       await flutterLocalNotificationsPlugin.cancel(notificationID);
     }
     if (list[index] == false) {
-      await scheduleAlarm(notificationID, getTitlePrayer(pr.name),
-          getBodyPrayer(pr.name), pr.name);
+      await updateSharedPrefrences(pr.name, list[index]);
+      await scheduleAlarm(notificationID, await getTitlePrayer(pr.name),
+          await getBodyPrayer(pr.name), pr.name);
     }
   }
 }

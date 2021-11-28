@@ -1,17 +1,13 @@
 // ignore_for_file: avoid_print
 
-import 'dart:io';
-import 'package:flutter/foundation.dart';
+//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
-import 'package:path_provider/path_provider.dart';
 import 'package:solidarieta/main.dart';
-import 'package:solidarieta/src/core/models/hazem/prayerModel.dart';
+import 'package:solidarieta/src/core/models/hazem/hiveForWorkManager.dart';
+import 'package:solidarieta/src/core/models/hazem/notifications_state.dart';
 import 'package:workmanager/workmanager.dart';
-
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -19,36 +15,29 @@ import 'package:timezone/timezone.dart' as tz;
 
 void callBackDispatcher() async {
   WidgetsFlutterBinding.ensureInitialized();
-  tz.initializeTimeZones();
-  final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName));
-  Directory appDocDir = await getApplicationDocumentsDirectory();
-  String appDocPath = appDocDir.path;
-  await Hive.initFlutter(appDocPath);
-  await Hive.openBox('notifications');
-  var i = Hive.box("notifications");
-  List listNotifi = i.values.toList();
-
-  //=================//
-  var initializationSettingsAndroid =
-      const AndroidInitializationSettings('solidarieta_logo');
-  var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-      onDidReceiveLocalNotification: (id, title, body, payload) async {});
-  var initializationSettings = InitializationSettings(
-      android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (payload) async {
-    if (payload != null) {
-      debugPrint('notification payload: ' + payload);
-    }
-  });
-  //=======================//
+  initNotifications() async {
+    tz.initializeTimeZones();
+    final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZoneName));
+    var initializationSettingsAndroid =
+        const AndroidInitializationSettings('solidarieta_logo');
+    var initializationSettingsIOS = IOSInitializationSettings(
+        requestAlertPermission: true,
+        requestBadgePermission: true,
+        requestSoundPermission: true,
+        onDidReceiveLocalNotification: (id, title, body, payload) async {});
+    var initializationSettings = InitializationSettings(
+        android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (payload) async {
+      if (payload != null) {
+        debugPrint('notification payload: ' + payload);
+      }
+    });
+  }
 
   Future scheduleAlarm(int id, String title, String body, String prayer) async {
-    DateTime scheduledNotificationDateTime = selectAlarmDateTime(prayer);
+    DateTime scheduledNotificationDateTime = await selectAlarmDateTime(prayer);
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'alarm_notif', 'alarm_notif',
         icon: 'solidarieta_logo',
@@ -80,35 +69,37 @@ void callBackDispatcher() async {
 
   Workmanager().executeTask((taskName, inputData) async {
     List<int> listID = await getIdForNotifications();
+    List<bool> listNotifi = await getSharedPrefrences();
+    await initNotifications();
 
     if (listNotifi[0] == true) {
       print("Fajr : Done");
-      await scheduleAlarm(
-          listID[0], getTitlePrayer("Fajr"), getBodyPrayer("Fajr"), "Fajr");
+      await scheduleAlarm(listID[0], await getTitlePrayer("Fajr"),
+          await getBodyPrayer("Fajr"), "Fajr");
     }
     if (listNotifi[1] == true) {
       print("Duher : Done");
 
-      await scheduleAlarm(
-          listID[1], getTitlePrayer("Duhr"), getBodyPrayer("Duhr"), "Duhr");
+      await scheduleAlarm(listID[1], await getTitlePrayer("Duhr"),
+          await getBodyPrayer("Duhr"), "Duhr");
     }
     if (listNotifi[2] == true) {
       print("Asr : Done");
 
-      await scheduleAlarm(
-          listID[2], getTitlePrayer("Asr"), getBodyPrayer("Asr"), "Asr");
+      await scheduleAlarm(listID[2], await getTitlePrayer("Asr"),
+          await getBodyPrayer("Asr"), "Asr");
     }
     if (listNotifi[3] == true) {
       print("Maghreb : Done");
 
-      await scheduleAlarm(listID[3], getTitlePrayer("Maghreb"),
-          getBodyPrayer("Maghreb"), "Maghreb");
+      await scheduleAlarm(listID[3], await getTitlePrayer("Maghreb"),
+          await getBodyPrayer("Maghreb"), "Maghreb");
     }
     if (listNotifi[4] == true) {
       print("Isha : Done");
 
-      await scheduleAlarm(
-          listID[4], getTitlePrayer("Isha"), getBodyPrayer("Isha"), "Isha");
+      await scheduleAlarm(listID[4], await getTitlePrayer("Isha"),
+          await getBodyPrayer("Isha"), "Isha");
     }
 
     return Future.value(true);
@@ -131,9 +122,8 @@ Future<List<int>> getIdForNotifications() async {
   return listID;
 }
 
-List<Prayer> getNamePrayer = getPrayers();
-List<Prayer> prayerNextDateBody = getDateTimeForNextDay();
-String getTitlePrayer(String name) {
+Future<String> getTitlePrayer(String name) async {
+  List<Prayer2> getNamePrayer = await testHazem();
   String title;
   if (name == "Fajr") {
     title = "Salat Al ${getNamePrayer[0].name} 🤲";
@@ -149,10 +139,10 @@ String getTitlePrayer(String name) {
   return title;
 }
 
-bool nowIsAfterPrayer(String prayer) {
+Future<bool> nowIsAfterPrayer(String prayer) async {
   bool res;
   DateTime now = DateTime.now();
-  List<Prayer> prayerTime = getPrayers();
+  List<Prayer2> prayerTime = await testHazem();
   List<DateTime> listPrayerTime = [];
   for (int i = 0; i < 5; i++) {
     listPrayerTime.add(prayerTime[i]
@@ -194,10 +184,12 @@ bool nowIsAfterPrayer(String prayer) {
   return res;
 }
 
-String getBodyPrayer(String name) {
+Future<String> getBodyPrayer(String name) async {
+  List<Prayer2> getNamePrayer = await testHazem();
+  List<Prayer2> prayerNextDateBody = await testHazem2();
   String body;
   if (name == "Fajr") {
-    if (nowIsAfterPrayer("Fajr")) {
+    if (await nowIsAfterPrayer("Fajr")) {
       body =
           "It's time of prayer now : ${prayerNextDateBody[0].hour}:${prayerNextDateBody[0].minute} 🕌";
     } else {
@@ -205,7 +197,7 @@ String getBodyPrayer(String name) {
           "It's time of prayer now : ${getNamePrayer[0].hour}:${getNamePrayer[0].minute} 🕌";
     }
   } else if (name == "Duhr") {
-    if (nowIsAfterPrayer("Duhr")) {
+    if (await nowIsAfterPrayer("Duhr")) {
       body =
           "It's time of prayer now : ${prayerNextDateBody[1].hour}:${prayerNextDateBody[1].minute} 🕌";
     } else {
@@ -213,7 +205,7 @@ String getBodyPrayer(String name) {
           "It's time of prayer now : ${getNamePrayer[1].hour}:${getNamePrayer[1].minute} 🕌";
     }
   } else if (name == "Asr") {
-    if (nowIsAfterPrayer("Asr")) {
+    if (await nowIsAfterPrayer("Asr")) {
       body =
           "It's time of prayer now : ${prayerNextDateBody[2].hour}:${prayerNextDateBody[2].minute} 🕌";
     } else {
@@ -221,7 +213,7 @@ String getBodyPrayer(String name) {
           "It's time of prayer now : ${getNamePrayer[2].hour}:${getNamePrayer[2].minute} 🕌";
     }
   } else if (name == "Maghreb") {
-    if (nowIsAfterPrayer("Maghreb")) {
+    if (await nowIsAfterPrayer("Maghreb")) {
       body =
           "It's time of prayer now : ${prayerNextDateBody[3].hour}:${prayerNextDateBody[3].minute} 🕌";
     } else {
@@ -229,7 +221,7 @@ String getBodyPrayer(String name) {
           "It's time of prayer now : ${getNamePrayer[3].hour}:${getNamePrayer[3].minute} 🕌";
     }
   } else {
-    if (nowIsAfterPrayer("Isha")) {
+    if (await nowIsAfterPrayer("Isha")) {
       body =
           "It's time of prayer now : ${prayerNextDateBody[4].hour}:${prayerNextDateBody[4].minute} 🕌";
     } else {
@@ -242,45 +234,45 @@ String getBodyPrayer(String name) {
 
 //-------------------------This Function Return Alarm Date For Prayer-------------------------//
 
-DateTime selectAlarmDateTime(String prayer) {
-  List<Prayer> nextPrayer2 = getPrayers();
+Future<DateTime> selectAlarmDateTime(String prayer) async {
+  List<Prayer2> nextPrayer2 = await testHazem();
   // Will get Date For Prayer For This Day
-  List<Prayer> prayerNextDate = getDateTimeForNextDay();
+  List<Prayer2> prayerNextDate = await testHazem2();
   // Will get Date For Prayer For Next Day
   DateTime date;
   if (prayer == "Fajr") {
-    if (nowIsAfterPrayer("Fajr")) {
+    if (await nowIsAfterPrayer("Fajr")) {
       date = prayerNextDate[0].dateTime;
     } else {
       date = nextPrayer2[0].dateTime;
     }
   } else if (prayer == "Duhr") {
-    if (nowIsAfterPrayer("Duhr")) {
+    if (await nowIsAfterPrayer("Duhr")) {
       date = prayerNextDate[1].dateTime;
     } else {
       date = nextPrayer2[1].dateTime;
     }
   } else if (prayer == "Asr") {
-    if (nowIsAfterPrayer("Asr")) {
+    if (await nowIsAfterPrayer("Asr")) {
       date = prayerNextDate[2].dateTime;
     } else {
       date = nextPrayer2[2].dateTime;
     }
   } else if (prayer == "Maghreb") {
-    if (nowIsAfterPrayer("Maghreb")) {
+    if (await nowIsAfterPrayer("Maghreb")) {
       date = prayerNextDate[3].dateTime;
     } else {
       date = nextPrayer2[3].dateTime;
     }
   } else {
-    if (nowIsAfterPrayer("Isha")) {
+    if (await nowIsAfterPrayer("Isha")) {
       date = prayerNextDate[4].dateTime;
     } else {
       date = nextPrayer2[4].dateTime;
     }
   }
 
-  return date.toLocal().subtract(DateTime.now().timeZoneOffset);
+  return date;
 }
 
 //----------------------------End Alarm Date For Prayer----------------------------//
@@ -306,7 +298,7 @@ Future scheduleAlarm(int id, String title, String body, String prayer) async {
     }
   });
 
-  DateTime scheduledNotificationDateTime = selectAlarmDateTime(prayer);
+  DateTime scheduledNotificationDateTime = await selectAlarmDateTime(prayer);
   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif', 'alarm_notif',
       icon: 'solidarieta_logo',

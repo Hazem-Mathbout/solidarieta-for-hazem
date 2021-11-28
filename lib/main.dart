@@ -29,14 +29,6 @@ void main() async {
   await Hive.openBox('prayers');
   // -------------- Hive -------------------
 
-// --------------WorkManager--------------Start
-
-  await Workmanager().initialize(callBackDispatcher, isInDebugMode: true);
-  Workmanager().registerPeriodicTask("notifyPeriodicTask", "prayer",
-      frequency: const Duration(days: 1));
-
-  // --------------WorkManager--------------End
-
   runApp(
     MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => BottomNavbarIndex()),
@@ -46,6 +38,14 @@ void main() async {
       ChangeNotifierProvider(create: (context) => PrayerSettingsProvider()),
     ], child: MyApp()),
   );
+
+  // --------------WorkManager--------------Start
+
+  await Workmanager().initialize(callBackDispatcher, isInDebugMode: true);
+  Workmanager().registerPeriodicTask("notifyPeriodicTask", "prayer",
+      frequency: const Duration(days: 1));
+
+  // --------------WorkManager--------------End
 }
 
 class MyApp extends StatelessWidget {
