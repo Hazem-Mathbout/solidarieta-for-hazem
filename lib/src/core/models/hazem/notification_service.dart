@@ -41,8 +41,8 @@ void callBackDispatcher() async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'alarm_notif', 'alarm_notif',
         icon: 'solidarieta_logo',
-        playSound: true,
-        sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
+        // playSound: true,
+        // sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
         largeIcon: DrawableResourceAndroidBitmap('solidarieta_logo'),
         importance: Importance.max);
 
@@ -108,11 +108,11 @@ void callBackDispatcher() async {
 
 Future<List<int>> getIdForNotifications() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  int idFajr = (prefs.getInt("0") ?? 0) + 1;
-  int idDuhr = (prefs.getInt("1") ?? 1) + 1;
-  int idAsr = (prefs.getInt("2") ?? 2) + 1;
-  int idMaghreb = (prefs.getInt("3") ?? 3) + 1;
-  int idIsha = (prefs.getInt("4") ?? 4) + 1;
+  int idFajr = (prefs.getInt("0") ?? 0) + 5;
+  int idDuhr = (prefs.getInt("1") ?? 1) + 5;
+  int idAsr = (prefs.getInt("2") ?? 2) + 5;
+  int idMaghreb = (prefs.getInt("3") ?? 3) + 5;
+  int idIsha = (prefs.getInt("4") ?? 4) + 5;
   prefs.setInt("0", idFajr);
   prefs.setInt("1", idDuhr);
   prefs.setInt("2", idAsr);
@@ -123,18 +123,18 @@ Future<List<int>> getIdForNotifications() async {
 }
 
 Future<String> getTitlePrayer(String name) async {
-  List<Prayer2> getNamePrayer = await testHazem();
+  List<Prayer2> prayerForThisDAy = await getPrayerForThisDAy();
   String title;
   if (name == "Fajr") {
-    title = "Salat Al ${getNamePrayer[0].name} 🤲";
+    title = "Salat Al ${prayerForThisDAy[0].name} 🤲";
   } else if (name == "Duhr") {
-    title = "Salat Al ${getNamePrayer[1].name} 🤲";
+    title = "Salat Al ${prayerForThisDAy[1].name} 🤲";
   } else if (name == "Asr") {
-    title = "Salat Al ${getNamePrayer[2].name} 🤲";
+    title = "Salat Al ${prayerForThisDAy[2].name} 🤲";
   } else if (name == "Maghreb") {
-    title = "Salat Al ${getNamePrayer[3].name} 🤲";
+    title = "Salat Al ${prayerForThisDAy[3].name} 🤲";
   } else {
-    title = "Salat Al ${getNamePrayer[4].name} 🤲";
+    title = "Salat Al ${prayerForThisDAy[4].name} 🤲";
   }
   return title;
 }
@@ -142,13 +142,10 @@ Future<String> getTitlePrayer(String name) async {
 Future<bool> nowIsAfterPrayer(String prayer) async {
   bool res;
   DateTime now = DateTime.now();
-  List<Prayer2> prayerTime = await testHazem();
+  List<Prayer2> prayerForThisDAy = await getPrayerForThisDAy();
   List<DateTime> listPrayerTime = [];
   for (int i = 0; i < 5; i++) {
-    listPrayerTime.add(prayerTime[i]
-        .dateTime
-        .toLocal()
-        .subtract(DateTime.now().timeZoneOffset));
+    listPrayerTime.add(prayerForThisDAy[i].dateTime);
   }
   if (prayer == "Fajr") {
     if (now.isAfter(listPrayerTime[0])) {
@@ -185,48 +182,48 @@ Future<bool> nowIsAfterPrayer(String prayer) async {
 }
 
 Future<String> getBodyPrayer(String name) async {
-  List<Prayer2> getNamePrayer = await testHazem();
-  List<Prayer2> prayerNextDateBody = await testHazem2();
+  List<Prayer2> prayerForThisDAy = await getPrayerForThisDAy();
+  List<Prayer2> prayerForNextDay = await getPrayerForNextDay();
   String body;
   if (name == "Fajr") {
     if (await nowIsAfterPrayer("Fajr")) {
       body =
-          "It's time of prayer now : ${prayerNextDateBody[0].hour}:${prayerNextDateBody[0].minute} 🕌";
+          "It's time of prayer now : ${prayerForNextDay[0].hour}:${prayerForNextDay[0].minute} 🕌";
     } else {
       body =
-          "It's time of prayer now : ${getNamePrayer[0].hour}:${getNamePrayer[0].minute} 🕌";
+          "It's time of prayer now : ${prayerForThisDAy[0].hour}:${prayerForThisDAy[0].minute} 🕌";
     }
   } else if (name == "Duhr") {
     if (await nowIsAfterPrayer("Duhr")) {
       body =
-          "It's time of prayer now : ${prayerNextDateBody[1].hour}:${prayerNextDateBody[1].minute} 🕌";
+          "It's time of prayer now : ${prayerForNextDay[1].hour}:${prayerForNextDay[1].minute} 🕌";
     } else {
       body =
-          "It's time of prayer now : ${getNamePrayer[1].hour}:${getNamePrayer[1].minute} 🕌";
+          "It's time of prayer now : ${prayerForThisDAy[1].hour}:${prayerForThisDAy[1].minute} 🕌";
     }
   } else if (name == "Asr") {
     if (await nowIsAfterPrayer("Asr")) {
       body =
-          "It's time of prayer now : ${prayerNextDateBody[2].hour}:${prayerNextDateBody[2].minute} 🕌";
+          "It's time of prayer now : ${prayerForNextDay[2].hour}:${prayerForNextDay[2].minute} 🕌";
     } else {
       body =
-          "It's time of prayer now : ${getNamePrayer[2].hour}:${getNamePrayer[2].minute} 🕌";
+          "It's time of prayer now : ${prayerForThisDAy[2].hour}:${prayerForThisDAy[2].minute} 🕌";
     }
   } else if (name == "Maghreb") {
     if (await nowIsAfterPrayer("Maghreb")) {
       body =
-          "It's time of prayer now : ${prayerNextDateBody[3].hour}:${prayerNextDateBody[3].minute} 🕌";
+          "It's time of prayer now : ${prayerForNextDay[3].hour}:${prayerForNextDay[3].minute} 🕌";
     } else {
       body =
-          "It's time of prayer now : ${getNamePrayer[3].hour}:${getNamePrayer[3].minute} 🕌";
+          "It's time of prayer now : ${prayerForThisDAy[3].hour}:${prayerForThisDAy[3].minute} 🕌";
     }
   } else {
     if (await nowIsAfterPrayer("Isha")) {
       body =
-          "It's time of prayer now : ${prayerNextDateBody[4].hour}:${prayerNextDateBody[4].minute} 🕌";
+          "It's time of prayer now : ${prayerForNextDay[4].hour}:${prayerForNextDay[4].minute} 🕌";
     } else {
       body =
-          "It's time of prayer now : ${getNamePrayer[4].hour}:${getNamePrayer[4].minute} 🕌";
+          "It's time of prayer now : ${prayerForThisDAy[4].hour}:${prayerForThisDAy[4].minute} 🕌";
     }
   }
   return body;
@@ -235,40 +232,40 @@ Future<String> getBodyPrayer(String name) async {
 //-------------------------This Function Return Alarm Date For Prayer-------------------------//
 
 Future<DateTime> selectAlarmDateTime(String prayer) async {
-  List<Prayer2> nextPrayer2 = await testHazem();
+  List<Prayer2> prayerForThisDAy = await getPrayerForThisDAy();
   // Will get Date For Prayer For This Day
-  List<Prayer2> prayerNextDate = await testHazem2();
+  List<Prayer2> prayerForNextDay = await getPrayerForNextDay();
   // Will get Date For Prayer For Next Day
   DateTime date;
   if (prayer == "Fajr") {
     if (await nowIsAfterPrayer("Fajr")) {
-      date = prayerNextDate[0].dateTime;
+      date = prayerForNextDay[0].dateTime;
     } else {
-      date = nextPrayer2[0].dateTime;
+      date = prayerForThisDAy[0].dateTime;
     }
   } else if (prayer == "Duhr") {
     if (await nowIsAfterPrayer("Duhr")) {
-      date = prayerNextDate[1].dateTime;
+      date = prayerForNextDay[1].dateTime;
     } else {
-      date = nextPrayer2[1].dateTime;
+      date = prayerForThisDAy[1].dateTime;
     }
   } else if (prayer == "Asr") {
     if (await nowIsAfterPrayer("Asr")) {
-      date = prayerNextDate[2].dateTime;
+      date = prayerForNextDay[2].dateTime;
     } else {
-      date = nextPrayer2[2].dateTime;
+      date = prayerForThisDAy[2].dateTime;
     }
   } else if (prayer == "Maghreb") {
     if (await nowIsAfterPrayer("Maghreb")) {
-      date = prayerNextDate[3].dateTime;
+      date = prayerForNextDay[3].dateTime;
     } else {
-      date = nextPrayer2[3].dateTime;
+      date = prayerForThisDAy[3].dateTime;
     }
   } else {
     if (await nowIsAfterPrayer("Isha")) {
-      date = prayerNextDate[4].dateTime;
+      date = prayerForNextDay[4].dateTime;
     } else {
-      date = nextPrayer2[4].dateTime;
+      date = prayerForThisDAy[4].dateTime;
     }
   }
 
@@ -302,13 +299,13 @@ Future scheduleAlarm(int id, String title, String body, String prayer) async {
   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif', 'alarm_notif',
       icon: 'solidarieta_logo',
-      playSound: true,
-      sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
+      // playSound: true,
+      // sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
       largeIcon: DrawableResourceAndroidBitmap('solidarieta_logo'),
       importance: Importance.max);
 
   var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
-      sound: 'a_long_cold_sting.wav',
+      // sound: 'a_long_cold_sting.wav',
       presentAlert: true,
       presentBadge: true,
       presentSound: true);

@@ -19,7 +19,7 @@ class Prayer2 {
   });
 }
 
-Future<List<Prayer2>> testHazem() async {
+Future<List<Prayer2>> getPrayerForThisDAy() async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   await Hive.initFlutter(appDocPath);
@@ -124,7 +124,7 @@ Future<List<Prayer2>> testHazem() async {
   return prayers;
 }
 
-Future<List<Prayer2>> testHazem2() async {
+Future<List<Prayer2>> getPrayerForNextDay() async {
   Directory appDocDir = await getApplicationDocumentsDirectory();
   String appDocPath = appDocDir.path;
   await Hive.initFlutter(appDocPath);
