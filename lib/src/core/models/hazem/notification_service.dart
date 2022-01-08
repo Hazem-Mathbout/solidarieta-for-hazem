@@ -41,8 +41,8 @@ void callBackDispatcher() async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
         'alarm_notif', 'alarm_notif',
         icon: 'solidarieta_logo',
-        // playSound: true,
-        // sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
+        playSound: true,
+        sound: RawResourceAndroidNotificationSound('sound_prayer'),
         largeIcon: DrawableResourceAndroidBitmap('solidarieta_logo'),
         importance: Importance.max);
 
@@ -299,13 +299,13 @@ Future scheduleAlarm(int id, String title, String body, String prayer) async {
   var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'alarm_notif', 'alarm_notif',
       icon: 'solidarieta_logo',
-      // playSound: true,
-      // sound: RawResourceAndroidNotificationSound('a_long_cold_sting.wav'),
+      playSound: true,
+      sound: RawResourceAndroidNotificationSound('Sound_Prayer'),
       largeIcon: DrawableResourceAndroidBitmap('solidarieta_logo'),
       importance: Importance.max);
 
   var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
-      // sound: 'a_long_cold_sting.wav',
+      sound: 'sound_prayer',
       presentAlert: true,
       presentBadge: true,
       presentSound: true);
